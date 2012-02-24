@@ -1,0 +1,11 @@
+* threading in python : http://faq.pygtk.org/index.py?file=faq20.006.htp&req=show
+* multiprocessing : http://docs.python.org/dev/library/multiprocessing.html
+* 
+* http://pyjs.org for web frontend?
+
+example for subscription: 
+
+sudo add-apt-repository ppa:acire-team/acire-releases
+sudo apt-get update
+sudo apt-get install acire
+

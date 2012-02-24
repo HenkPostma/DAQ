@@ -1,0 +1,27 @@
+Source: daq
+Section: python
+Priority: extra
+Build-Depends: cdbs (>= 0.4.43),
+ debhelper (>= 6),
+ python,
+ python-support (>= 0.6.4),
+ python-distutils-extra (>= 2.10)
+Maintainer: HenkPostma <henkpm@gmail.com>
+Standards-Version: 3.8.2
+XS-Python-Version: current
+
+Package: daq
+Architecture: all
+XB-Python-Version: ${python:Versions}
+Depends: ${misc:Depends},
+ ${python:Depends},
+ python-matplotlib,
+ python-pythonmagick,
+ python-numpy,
+ libcomedi0,
+ python-desktopcouch-records,
+ python-apport,
+ python-gobject,
+ python-gtk2
+Description: UNKNOWN
+ UNKNOWN

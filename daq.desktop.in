@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Daq
+Comment=Daq application
+Categories=GNOME;Utility;
+Exec=daq
+Icon=/usr/share/daq/media/icon.png
+Terminal=false
+Type=Application

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+input=`echo 1 $1 | awk '{print $1}'`
+mplayer tv:// -tv driver=v4l2:device=/dev/video0:width=720:height=480:input=$input:normid=0 -vf kerndeint,dsize=4/3,flip,mirror -fps 30 

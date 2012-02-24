@@ -1,0 +1,4 @@
+project = daq
+template = ubuntu-application
+lp_id = daq
+version = 0.4.3

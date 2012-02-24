@@ -1,0 +1,11 @@
+Format-Specification: http://wiki.debian.org/Proposals/CopyrightFormat
+Upstream-Name: daq
+Upstream-Maintainer: HenkPostma <henkpm@gmail.com>
+Upstream-Source: https://launchpad.net/daq
+
+Files: *
+Copyright: (C) 2009 Henk Postma
+Copyright: (C) 2009 HenkPostma <henkpm@gmail.com>
+License: GPL-3
+ The full text of the GPL is distributed in
+ /usr/share/common-licenses/GPL-3 on Debian systems.

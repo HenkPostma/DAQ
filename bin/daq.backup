@@ -1,0 +1,537 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+### BEGIN LICENSE
+# Copyright (C) 2009 HenkPostma <henkpm@gmail.com>
+#This program is free software: you can redistribute it and/or modify it 
+#under the terms of the GNU General Public License version 3, as published 
+#by the Free Software Foundation.
+#
+#This program is distributed in the hope that it will be useful, but 
+#WITHOUT ANY WARRANTY; without even the implied warranties of 
+#MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR 
+#PURPOSE.  See the GNU General Public License for more details.
+#
+#You should have received a copy of the GNU General Public License along 
+#with this program.  If not, see <http://www.gnu.org/licenses/>.
+### END LICENSE
+
+import sys
+import os
+import gtk
+import time 
+from numpy import *
+from numpy.fft import * 
+
+# optional Launchpad integration
+# this shouldn't crash if not found as it is simply used for bug reporting
+try:
+    import LaunchpadIntegration
+    launchpad_available = True
+except:
+    launchpad_available = False
+
+try:
+    import comedi
+except:
+    print "Cannot load comedi module, please install python-libcomedi"
+
+from matplotlib.figure import Figure
+from numpy import arange, sin, pi
+from time import localtime, strftime
+
+outsubdevice = "" # 1
+insubdevice = "" # 0
+
+def SetComediDevice():
+    if os.path.isfile("/proc/comedi"):
+        device = "/dev/comedi0"
+        dev = comedi.comedi_open(device)
+        global insubdevice
+        insubdevice = comedi.comedi_get_read_subdevice(dev)
+    #    print "subdevice for input = " + str(insubdevice)
+        global outsubdevice
+        outsubdevice = comedi.comedi_get_write_subdevice(dev)
+    #    print "subdevice for output = " + str(outsubdevice)
+        comedi.comedi_close(dev)
+        return "/dev/comedi0"
+    else:
+        return ""
+
+device = SetComediDevice()
+print "DAQ device is " + device 
+print "subdevice for input = " + str(insubdevice)
+print "subdevice for output = " + str(outsubdevice)
+
+import getpass
+basedir = ""
+user = getpass.getuser()
+print "User is " + user
+
+# Check if we are working in the source tree or from the installed 
+# package and mangle the python path accordingly
+if os.path.dirname(sys.argv[0]) != ".":
+    if sys.argv[0][0] == "/":
+        fullPath = os.path.dirname(sys.argv[0])
+    else:
+        fullPath = os.getcwd() + "/" + os.path.dirname(sys.argv[0])
+else:
+    fullPath = os.getcwd()
+sys.path.insert(0, os.path.dirname(fullPath))
+
+from matplotlib.backends.backend_gtkcairo import FigureCanvasGTKCairo as FigureCanvas
+#from matplotlib.backends.backend_gtkagg import FigureCanvasGTKAgg as FigureCanvas
+#from matplotlib.backends.backend_gtkagg import NavigationToolbar2GTKAgg as NavigationToolbar
+
+fig = Figure(figsize=(5,4), dpi=80)
+canvas = FigureCanvas(fig)
+
+tfig = Figure(figsize=(5,4), dpi=80)
+tcanvas = FigureCanvas(tfig)
+
+from daq import AboutDaqDialog, PreferencesDaqDialog
+from daq.daqconfig import getdatapath
+
+
+class DaqWindow(gtk.Window):
+    __gtype_name__ = "DaqWindow"
+
+    def __init__(self):
+        """__init__ - This function is typically not called directly.
+        Creation a DaqWindow requires redeading the associated ui
+        file and parsing the ui definition extrenally,
+        and then calling DaqWindow.finish_initializing().
+
+        Use the convenience function NewDaqWindow to create
+        DaqWindow object.
+
+        """
+        pass
+
+    def finish_initializing(self, builder):
+        """finish_initalizing should be called after parsing the ui definition
+        and creating a DaqWindow object with it in order to finish
+        initializing the start of the new DaqWindow instance.
+
+        """
+        #get a reference to the builder and set up the signals
+        self.builder = builder
+        self.builder.connect_signals(self)
+
+        global launchpad_available
+        if launchpad_available:
+            # see https://wiki.ubuntu.com/UbuntuDevelopment/Internationalisation/Coding for more information
+            # about LaunchpadIntegration
+            helpmenu = self.builder.get_object('menu3')
+            if helpmenu:
+                LaunchpadIntegration.set_sourcepackagename('daq')
+                LaunchpadIntegration.add_items(helpmenu, 0, False, True)
+            else:
+                launchpad_available = False
+
+        #uncomment the following code to read in preferences at start up
+        #dlg = PreferencesDaqDialog.NewPreferencesDaqDialog()
+        #self.preferences = dlg.get_preferences()
+
+        #code for other initialization actions should be added here
+
+#        vbox = self.builder.get_object("vbox1") # VBox()
+
+        self.builder.get_object("user").set_text(user)
+# 	put linearscan figure
+        table = self.builder.get_object("linearscan")
+            # a gtk.DrawingArea
+        table.attach(canvas, 1, 2, 0, 4)
+        canvas.show()
+# 	put timescan figure
+	table = self.builder.get_object("timetrace")
+	table.attach(tcanvas, 1, 2, 0, 4)
+	tcanvas.show()
+
+        if str(insubdevice) == "":
+            inmsg = "NONE"
+        else:
+            inmsg = str(insubdevice)
+        if str(outsubdevice) == "":
+            outmsg = "NONE"
+        else:
+            outmsg = str(outsubdevice)
+        self.builder.get_object("statusbar1").push(0, "Device = " + device + ", analogin = " + inmsg + ", analogout = " + outmsg)
+
+
+    def hostbutton_toggled(self, widget, data=None):
+        if self.builder.get_object("hostbutton").get_active():
+            self.builder.get_object("host").set_has_frame(True)
+        else:
+            self.builder.get_object("host").set_has_frame(False)
+
+    def t_start_func(self, widget, data=None):
+	try:
+	    number_of_scans = int(self.builder.get_object("t_number_of_scans").get_text())
+	except:
+	    print "number of scans not an integer"
+	    self.builder.get_object("statusbar1").push(0, "Error: number of scans not an integer")
+	    return
+	try:
+	    frequency = float(self.builder.get_object("t_frequency").get_text())
+	except:
+	    self.builder.get_object("statusbar1").push(0, "Error: frequency invalid")
+	    return
+	try:
+	    duration = float(self.builder.get_object("t_duration").get_text())
+	except:
+	    self.builder.get_object("statusbar1").push(0, "Error: duration invalid")
+	    return
+
+        bar = self.builder.get_object("progressbar")
+        bar.show()
+	ax = tfig.add_subplot(211, xlabel="time", ylabel="signal", axis_bgcolor='w', axisbg='w')
+	c = exp(-abs((arange(-30.0, 30.0, 1))/5))
+	c = c/sum(c)
+	for i in range(0, number_of_scans):
+		x = random.standard_normal((round(frequency*duration),)).tolist()
+ # ones(50)/50
+#		print len(c)
+#		print len(x)
+		x = convolve(x, c).tolist()
+		x = x[len(c):-len(c)]
+#		print len(x)
+#		print len(x)
+                bar.set_fraction(float(i+1)/number_of_scans)
+
+		while gtk.events_pending():
+		        gtk.main_iteration()
+		if i == 0:
+			y = abs(rfft(x))
+		else:
+			y = y + abs(rfft(x))
+#		print len(y)
+	#	x = arange(0, 1, 0.01).tolist()
+
+#		ay = tfig.add_subplot(212)
+		ax.plot(x,'-', alpha=0.5)
+#		ay.loglog(y, '-', alpha=0.5)
+#	print c
+	ay = tfig.add_subplot(212)
+#	ay.plot(y/number_of_scans, '-', alpha=0.5)
+	ay.loglog(y/number_of_scans, '-', alpha=0.5)
+	ax.clear()
+	ax.plot(c)
+#	az.tfig(add_subplot(313))
+#	az.plot(c)
+	#	tfig.plot(x, x)
+	
+
+        bar.set_fraction(0)
+        bar.hide()
+
+
+	tcanvas.draw()
+	return
+    
+    def start_func(self, widget, data=None):
+        if device == "":
+            self.builder.get_object("statusbar1").push(0, "No DAQ device found")
+            return
+        if insubdevice == "":
+            self.builder.get_object("statusbar1").push(0, "No Analog In Subdevice found")
+            return
+        if outsubdevice == "":
+            self.builder.get_object("statusbar1").push(0, "No Analog Out Subdevice found")
+            return
+
+        xtext = self.builder.get_object("xlabel").get_text()
+        xunit = self.builder.get_object("xunit").get_text()
+        if xunit != "":
+            xtext = xtext + " (" + xunit + ")"
+
+        ytext = self.builder.get_object("ylabel").get_text()
+        yunit = self.builder.get_object("yunit").get_text()
+        if yunit != "":
+            ytext = ytext + " (" + yunit + ")"
+
+        try:
+            channelin = int(self.builder.get_object("channelin").get_text())
+            channelout = int(self.builder.get_object("channelout").get_text())
+            xscale = float(self.builder.get_object("xscale").get_text())
+            yscale = float(self.builder.get_object("yscale").get_text())
+            xoffset = float(self.builder.get_object("xoffset").get_text())
+            yoffset = float(self.builder.get_object("yoffset").get_text())
+            startx = float(self.builder.get_object("startx").get_text())
+            stopx = float(self.builder.get_object("stopx").get_text())
+            increment = float(self.builder.get_object("increment").get_text())
+            wait = float(self.builder.get_object("wait").get_text())
+            sweeprate = float(self.builder.get_object("sweeprate").get_text())
+        except:
+            self.builder.get_object("statusbar1").push(0, "Error : Invalid Value")
+            return
+            
+        try:
+            timeperpoint = increment/sweeprate
+        except: 
+            timeperpoint = 0    
+        print timeperpoint
+    #    print pointsperprogress
+        analogref = comedi.AREF_GROUND
+        outrange =  0
+        inrange = 0
+
+        ax = fig.add_subplot(111, xlabel=xtext, ylabel=ytext, axis_bgcolor='w', axisbg='w')
+        try:
+            print "trying to open " + device
+            dev = comedi.comedi_open(device)
+        except:
+            self.builder.get_object("statusbar1").push(0, "WARNING: cannot open device " + device + " are you allowed to write to it?")
+            return
+
+        self.builder.get_object("statusbar1").push(0, "opening " + device)
+        points = 10 # will modify this in a minute
+    #    increment = float((stopx-startx)/(points-1))
+        if self.builder.get_object("cycle").get_active():
+    # if we cycle, we 
+    #        measure from 0 to startx
+    #         measure from startx to stopx
+    #        measure from stopx to 0
+            x = arange(0, startx, -increment).tolist()
+            x.extend(arange(startx, stopx, increment).tolist()) # (range(0, points)/xscale-xoffset + 10) * 3276.6
+            x.extend(arange(stopx, 0-increment, -increment).tolist())
+            points = len(x)
+            #        print points
+            y = range(0, points)
+        else:
+            x = arange(startx, stopx+increment, increment).tolist() # (range(0, points)/xscale-xoffset + 10) * 3276.6
+            points = len(x)
+            #        print points
+            y = range(0, points)
+        bar = self.builder.get_object("progressbar")
+        bar.show()
+
+        # we only need to  update the progress bar twice a second, so that means every so many points:
+        try:
+            pointsperprogress = int(round(0.5/timeperpoint))
+        except:
+            self.builder.get_object("statusbar1").push(0, "Error : Invalid Value")
+            return
+        if pointsperprogress == 0:
+            pointsperprogress = 1
+
+        i = 0
+        for xvalue in x:
+            write_data = int((xvalue/xscale-xoffset + 10)* 3276.6)
+            msg = comedi.comedi_data_write(dev, outsubdevice, channelout, outrange, analogref, write_data)
+            if i == 0:
+                time.sleep(wait)
+            time.sleep(timeperpoint)
+            if i % pointsperprogress == 0:
+                bar.set_fraction(float(i+1)/points)
+            while gtk.events_pending():
+                gtk.main_iteration()
+            result = comedi.comedi_data_read(dev,insubdevice,channelin,inrange,analogref)
+            datain=result[1]
+            msg=result[0]
+            y[i] = ((float(datain)/3276.6)-10)/yscale-yoffset
+            i = i+1
+    #        x = x + increment
+        bar.set_fraction(0)
+        bar.hide()
+        comedi.comedi_close(dev)
+
+        now = strftime("%Y%m%d-%H%M%S", localtime())
+        #        print now
+        basedir = self.builder.get_object("directory").get_text()
+        if basedir[-1] != "/":
+            basedir = basedir + "/"
+        filename = basedir + user + "-" + now + ".dat"
+        f = open(filename,"w")
+        i = 0
+        while i < points:
+            f.write(str(x[i]) + "\t" + str(y[i]) + "\n");
+            i = i+1
+        f.close()
+
+        ax.plot(x,y,'o', alpha=0.5)
+        coeff = polyfit(x, y, 1)
+        fitx=[startx, stopx]
+        fity=[startx*coeff[0]+coeff[1], stopx*coeff[0]+coeff[1]]
+        self.builder.get_object("slope").set_text(str( "%1.3g" % coeff[0]))
+        self.builder.get_object("offset").set_text(str("%1.3g" % coeff[1]))
+        self.builder.get_object("slopeunit").set_text(self.builder.get_object("yunit").get_text() + "/" + self.builder.get_object("xunit").get_text())
+        self.builder.get_object("offsetunit").set_text(self.builder.get_object("yunit").get_text())
+        ax.plot(fitx, fity, '-')
+        # a gtk.DrawingArea
+        # vbox.pack_start(canvas)
+        print filename
+        self.builder.get_object("statusbar1").push(0, "written to file " + filename)        
+        # Now we save the configuration used for getting the data
+        filename = basedir + user + "-" + now + ".cfg"
+        f = open(filename,"w")
+        f.write("xlabel " + self.builder.get_object("xlabel").get_text() + "\n")
+        f.write("xunit " + self.builder.get_object("xunit").get_text() + "\n")
+        f.write("ylabel " + self.builder.get_object("ylabel").get_text() + "\n")
+        f.write("yunit " + self.builder.get_object("yunit").get_text() + "\n")
+        f.write("channelin " + self.builder.get_object("channelin").get_text() + "\n")
+        f.write("channelout " + self.builder.get_object("channelout").get_text() + "\n")
+        f.write("xscale " + self.builder.get_object("xscale").get_text() + "\n")
+        f.write("yscale " + self.builder.get_object("yscale").get_text() + "\n")
+        f.write("xoffset " + self.builder.get_object("xoffset").get_text() + "\n")
+        f.write("yoffset " + self.builder.get_object("yoffset").get_text() + "\n")
+        f.write("startx " + self.builder.get_object("startx").get_text() + "\n")
+        f.write("stopx " + self.builder.get_object("stopx").get_text() + "\n")
+        f.write("increment " + self.builder.get_object("increment").get_text() + "\n")
+        f.write("wait " + self.builder.get_object("wait").get_text() + "\n")
+        f.write("sweeprate " + self.builder.get_object("sweeprate").get_text() + "\n")
+        f.write("cycle " + str(self.builder.get_object("cycle").get_active()) + "\n")
+        f.write("slope " + self.builder.get_object("slope").get_text()  + "\n")
+        f.write("offset " + self.builder.get_object("offset").get_text()  + "\n")
+        f.close()
+        # close configuration file 
+        
+
+        canvas.draw()
+
+    def clear_plot(self, widget, data=None):
+        fig.clear()
+
+        # a gtk.DrawingArea
+        # vbox.pack_start(canvas)
+        canvas.draw()
+
+    def t_clear_plot(self, widget, data=None):
+        tfig.clear()
+
+        # a gtk.DrawingArea
+        # vbox.pack_start(canvas)
+        tcanvas.draw()
+
+    def about(self, widget, data=None):
+        """about - display the about box for daq """
+        about = AboutDaqDialog.NewAboutDaqDialog()
+        response = about.run()
+        about.destroy()
+
+    def preferences(self, widget, data=None):
+        """preferences - display the preferences window for daq """
+        prefs = PreferencesDaqDialog.NewPreferencesDaqDialog()
+        response = prefs.run()
+        if response == gtk.RESPONSE_OK:
+            #make any updates based on changed preferences here
+            pass
+        prefs.destroy()
+
+    def quit(self, widget, data=None):
+        """quit - signal handler for closing the DaqWindow"""
+        self.destroy()
+
+    def on_destroy(self, widget, data=None):
+        """on_destroy - called when the DaqWindow is close. """
+        #clean up code for saving application state should be added here
+
+        gtk.main_quit()
+
+
+    def set_voltage(self, widget, data=None):
+        if device == "":
+            self.builder.get_object("statusbar1").push(0, "No DAQ device found")
+            return
+        if insubdevice == "":
+            self.builder.get_object("statusbar1").push(0, "No Analog In Subdevice found")
+            return
+        if outsubdevice == "":
+            self.builder.get_object("statusbar1").push(0, "No Analog Out Subdevice found")
+            return
+        try:
+            x = float(self.builder.get_object("analogout").get_text())
+        except:
+            self.builder.get_object("statusbar1").push(0, "Invalid value")
+            return
+
+        try:
+            channelout = int(self.builder.get_object("channelout").get_text())
+            xscale = float(self.builder.get_object("xscale").get_text())
+            xoffset = float(self.builder.get_object("xoffset").get_text())
+        except:
+            self.builder.get_object("statusbar1").push(0, "Error : Invalid Value")
+            return
+
+            print "set to " + str(x)
+            dev = comedi.comedi_open("/dev/comedi0")
+            subdevice = 1
+            channel = int(self.builder.get_object("channelout").get_text())
+            analogref = comedi.AREF_GROUND
+        xvalue = float(self.builder.get_object("analogout").get_text())
+        write_data = int((xvalue/xscale-xoffset + 10)* 3276.6)
+        #write_data = int(  ()+ 10) * 3276.6)
+        range =  0
+        msg = comedi.comedi_data_write(dev, subdevice, channel, range, analogref, write_data);
+        self.builder.get_object("statusbar1").push(0, str(msg)+" channel : "+str(channel))
+        comedi.comedi_close(dev)
+
+    def get_voltage(self, widget, data=None):
+        if device == "":
+            self.builder.get_object("statusbar1").push(0, "No DAQ device found")
+            return
+        if insubdevice == "":
+            self.builder.get_object("statusbar1").push(0, "No Analog In Subdevice found")
+            return
+        if outsubdevice == "":
+            self.builder.get_object("statusbar1").push(0, "No Analog Out Subdevice found")
+            return
+        dev = comedi.comedi_open(device)
+
+        try:
+            channelin = int(self.builder.get_object("channelin").get_text())
+            xscale = float(self.builder.get_object("xscale").get_text())
+            yscale = float(self.builder.get_object("yscale").get_text())
+            yoffset = float(self.builder.get_object("yoffset").get_text())
+        except:
+            self.builder.get_object("statusbar1").push(0, "Error : Invalid Value")
+            return
+#        subdevice = 0
+#        channel = int(self.builder.get_object("channelin").get_text())
+        analogref = comedi.AREF_GROUND
+        range = 0
+        #        datain = 0
+        result = comedi.comedi_data_read(dev,insubdevice,channelin,range,analogref);
+        datain=result[1]
+        msg=result[0]
+        #            y[i] = ((float(datain)/3276.6)-10)*yscale-yoffset
+        value = ((float(datain)/3276.6)-10)/yscale-yoffset
+        returnvalue = "%1.3g" % value
+        self.builder.get_object("analogin").set_text(str(  returnvalue    ))
+        self.builder.get_object("statusbar1").push(0, str(msg) + " channel : " + str(channelin))
+        comedi.comedi_close(dev)
+
+
+def NewDaqWindow():
+    """NewDaqWindow - returns a fully instantiated
+    DaqWindow object. Use this function rather than
+    creating a DaqWindow directly.
+    """
+
+    #look for the ui file that describes the ui
+    ui_filename = os.path.join(getdatapath(), 'ui', 'DaqWindow.ui')
+    if not os.path.exists(ui_filename):
+        ui_filename = None
+
+    builder = gtk.Builder()
+    builder.add_from_file(ui_filename)
+    window = builder.get_object("daq_window")
+    window.finish_initializing(builder)
+    return window
+
+if __name__ == "__main__":
+    #support for command line options
+    import logging, optparse
+    parser = optparse.OptionParser(version="%prog %ver")
+    parser.add_option("-v", "--verbose", action="store_true", dest="verbose", help="Show debug messages")
+    (options, args) = parser.parse_args()
+
+    #set the logging level to show debug messages
+    if options.verbose:
+        logging.basicConfig(level=logging.DEBUG)
+        logging.debug('logging enabled')
+
+    #run the application
+    window = NewDaqWindow()
+    window.show()
+    gtk.main()
+
