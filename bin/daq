@@ -23,6 +23,7 @@ import commands
 import glob
 import datetime
 import fcntl 
+import re
 
 import gobject 
 
@@ -1013,16 +1014,8 @@ class DaqWindow(gtk.Window):
             return
 
         timebase = 1/frequency;
-#        self.builder.get_object("tr_timebase").set_text(str(timebase))
         bar = self.builder.get_object("progressbar")
         bar.show()
-
-#       need this for source type noise
-#        c = exp(-abs((arange(-30.0, 30.0, 1))/2))
-#        c = ampl*c/sum(c)
-#       end need this for source type noise
-
-#        t=arange(0, duration+timebase, timebase)
 
         now = strftime("%Y%m%d-%H%M%S", localtime())
 
@@ -1030,66 +1023,77 @@ class DaqWindow(gtk.Window):
         basedir = self.builder.get_object("directory").get_text()
         if basedir[-1] != "/":
             basedir = basedir + "/"
-        filename = basedir + user + "-" + now + "-" + str(i) + ".dat"
+
         
         rms = 0.0
         tempfig = Figure(figsize=(5,4), dpi=80)
         tempax = tempfig.add_subplot(111)
         for i in range(0, number_of_scans):
+            # opening output file for streaming
+            filename = basedir + user + "-" + now + "-" + str(i) + ".dat"
+            
+            
             frequency = float(self.builder.get_object("tr_frequency").get_text())
             print "duration " + str(round(frequency*duration))
-#            os.system("/home/bin/ain " + str(round(frequency*duration)) + " > /tmp/ain.dat 2> /dev/null")
             os.system("/home/bin/mscan 1 " + str(int(round(duration*frequency))) + " " + str(int(round(1e9/frequency))))
-            try:
-#                data = loadtxt('/tmp/ain.dat', delimiter=' ')
-                data = loadtxt('/tmp/data.dat')
-                self.builder.get_object("statusbar1").push(0, str(len(data)) + " points read")
-                os.system("rm /tmp/data.dat")   # clear it so other users don't trip over the file
-#                print "data length " + str(len(data))
-            except:
-                print "ERROR trying to load /tmp/data.dat, tell Henk Postma\n"
-                self.builder.get_object("statusbar1").push(0, "ERROR trying to load /tmp/data.dat, tell Henk Postma")
-                bar.hide()
-                return
+            # renaming to unique filename so the next run does not trip over it 
+            newname = "/tmp/data.dat" + str(i)
+            os.system("mv /tmp/data.dat " + newname)
+            fin = open(newname, "r")
+
+            lineparse = re.compile("\s")
+
+            cont = True                
+            i = 0
+            tt = []
+            xt = []            
+            while cont and i < 18000:
+                try:
+                    line = fin.readline()
+                    data = lineparse.split(line)
+                    tt.append(float(data[0]))
+                    xt.append(float(data[1]))
+                    i = i + 1
+                except:
+                    cont = False                    
+
+            x = array(xt)
+            t = array(tt)
+            t = t/1e9
+            x = x/65536*20-10
+            x = x/yscale-yoffset
+            
+            fin.close()
+
+            pid = os.fork()
+            if pid == 0:
+                # forking so the copy does not bog down the system
+                # in child
+                print "\n\nSpawned mini me to take care of copying in the background"
+                print strftime("%Y%m%d-%H%M%S", localtime()) + " copy " + newname + " to " + filename 
+                os.system("cp " + newname + " " + filename)
+                print strftime("%Y%m%d-%H%M%S", localtime()) + " deleting " + newname
+                os.system("rm " + newname)   # clear it so other users don't trip over the file
+                print strftime("%Y%m%d-%H%M%S", localtime()) + " copy done, stopping child"
+                sys.exit()
+
+            bar.set_fraction(float(i+1)/number_of_scans)
+
+            while gtk.events_pending():
+                gtk.main_iteration()            
 
             if averagepoints == 1:
-                t = data[:,0]
-                x = data[:,1]
+                pass 
             else:
                 newlength = int(floor(len(data)/averagepoints))
-#                    print "newlength " + str(newlength)
-                x = data[0:newlength, 1]
-                t = data[0:newlength, 0]
-#                    print "length is " + str(len(x))
                 frequency = frequency/averagepoints
                 for count in range(0, newlength):
                     x[count] = mean(data[count*averagepoints:(count+1)*averagepoints-1,1])
                     t[count] = data[count*averagepoints, 0]
             rms = rms + std(x)
-            bar.set_fraction(float(i+1)/number_of_scans)
-            t = t/1e9
-            x = x/65536*20-10
-            x = x/yscale-yoffset
-            
-            # remove temporary files            
-#            os.system("rm /tmp/ain.dat")
 
-
-            while gtk.events_pending():
-                gtk.main_iteration()
-                                        
-
-            
-            savetxt(filename, transpose((t, x)), delimiter='\t')
             print filename
             self.builder.get_object("statusbar1").push(0, "Saved in " + filename)
-            # end save 
- 
-#            if i == 0:
-#                y = p[0]
-#                f = p[1]
-#            else:
-#                y = y + p[0]
 
         xtext = self.builder.get_object("tr_xlabel").get_text() + " (" + self.builder.get_object("tr_xunit").get_text() + ")"
         ytext = self.builder.get_object("tr_ylabel").get_text() + " (" + self.builder.get_object("tr_yunit").get_text() + ")"
@@ -1188,6 +1192,7 @@ class DaqWindow(gtk.Window):
         fh.write("ylabel " + self.builder.get_object("tr_ylabel").get_text() + "\n")
         fh.write("yoffset " + self.builder.get_object("tr_yoffset").get_text() + "\n")        
         fh.write("yscale " + self.builder.get_object("tr_yscale").get_text() + "\n")
+        fh.write("yscale_note Note that the y scale is an integer number between 0 and 65535, representing a voltage between -10 and 10 V, and that needs to be corrected with the yscale and yoffset entries\n")
         fh.write("yunit " + self.builder.get_object("tr_yunit").get_text() + "\n")
         fh.write("points " + self.builder.get_object("tr_points").get_text() + "\n")
         fh.write("rms " + str(rms) + "\n")
