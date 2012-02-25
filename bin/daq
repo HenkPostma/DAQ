@@ -1071,7 +1071,23 @@ class DaqWindow(gtk.Window):
                 # in child
                 print "\n\nSpawned mini me to take care of copying in the background"
                 print strftime("%Y%m%d-%H%M%S", localtime()) + " copy " + newname + " to " + filename 
-                os.system("cp " + newname + " " + filename)
+                
+                fin = open(newname, "r")
+                fout = open(filename, "w")
+
+                lineparse = re.compile("\s")
+
+                i = 0
+                for line in fin:
+                    data = lineparse.split(line)
+                    fout.write(str(float(data[0])/1e9) + " " + str((float(data[1])/65536*20-10)/yscale-yoffset) + "\n")                                                        
+                    i = i + 1
+                    if i % 1000000 < 0.5:
+                        print str(i) + " million ..."
+                        
+#                os.system("cp " + newname + " " + filename)
+                fin.close()
+                fout.close()
                 print strftime("%Y%m%d-%H%M%S", localtime()) + " deleting " + newname
                 os.system("rm " + newname)   # clear it so other users don't trip over the file
                 print strftime("%Y%m%d-%H%M%S", localtime()) + " copy done, stopping child"
@@ -1192,7 +1208,7 @@ class DaqWindow(gtk.Window):
         fh.write("ylabel " + self.builder.get_object("tr_ylabel").get_text() + "\n")
         fh.write("yoffset " + self.builder.get_object("tr_yoffset").get_text() + "\n")        
         fh.write("yscale " + self.builder.get_object("tr_yscale").get_text() + "\n")
-        fh.write("yscale_note Note that the y scale is an integer number between 0 and 65535, representing a voltage between -10 and 10 V, and that needs to be corrected with the yscale and yoffset entries\n")
+#        fh.write("yscale_note Note that the y scale is an integer number between 0 and 65535, representing a voltage between -10 and 10 V, and that needs to be corrected with the yscale and yoffset entries\n")
         fh.write("yunit " + self.builder.get_object("tr_yunit").get_text() + "\n")
         fh.write("points " + self.builder.get_object("tr_points").get_text() + "\n")
         fh.write("rms " + str(rms) + "\n")
