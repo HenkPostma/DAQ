@@ -46,6 +46,7 @@
                 <property name="can_focus">True</property>
                 <property name="invisible_char">&#x25CF;</property>
                 <property name="width_chars">15</property>
+                <property name="text" translatable="yes">autohide</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -5814,7 +5815,7 @@ Frequency</property>
                       <object class="GtkVBox" id="vbox2">
                         <property name="visible">True</property>
                         <child>
-                          <object class="GtkTable" id="align">
+                          <object class="GtkTable" id="align2">
                             <property name="visible">True</property>
                             <property name="n_rows">3</property>
                             <property name="n_columns">3</property>
@@ -6022,7 +6023,7 @@ Frequency</property>
                                     <child>
                                       <object class="GtkTable" id="table31">
                                         <property name="visible">True</property>
-                                        <property name="n_rows">10</property>
+                                        <property name="n_rows">14</property>
                                         <property name="n_columns">8</property>
                                         <child>
                                           <object class="GtkLabel" id="label143">
@@ -6078,8 +6079,8 @@ Frequency</property>
                                             <property name="label" translatable="yes">Marker 4</property>
                                           </object>
                                           <packing>
-                                            <property name="top_attach">7</property>
-                                            <property name="bottom_attach">8</property>
+                                            <property name="top_attach">10</property>
+                                            <property name="bottom_attach">11</property>
                                             <property name="x_options"></property>
                                             <property name="y_options"></property>
                                           </packing>
@@ -6090,8 +6091,8 @@ Frequency</property>
                                             <property name="label" translatable="yes">Marker 3</property>
                                           </object>
                                           <packing>
-                                            <property name="top_attach">6</property>
-                                            <property name="bottom_attach">7</property>
+                                            <property name="top_attach">8</property>
+                                            <property name="bottom_attach">9</property>
                                             <property name="x_options"></property>
                                             <property name="y_options"></property>
                                           </packing>
@@ -6102,8 +6103,8 @@ Frequency</property>
                                             <property name="label" translatable="yes">Marker 2</property>
                                           </object>
                                           <packing>
-                                            <property name="top_attach">5</property>
-                                            <property name="bottom_attach">6</property>
+                                            <property name="top_attach">6</property>
+                                            <property name="bottom_attach">7</property>
                                             <property name="x_options"></property>
                                             <property name="y_options"></property>
                                           </packing>
@@ -6285,8 +6286,8 @@ Frequency</property>
                                           <packing>
                                             <property name="left_attach">2</property>
                                             <property name="right_attach">3</property>
-                                            <property name="top_attach">5</property>
-                                            <property name="bottom_attach">6</property>
+                                            <property name="top_attach">6</property>
+                                            <property name="bottom_attach">7</property>
                                             <property name="x_options"></property>
                                             <property name="y_options"></property>
                                           </packing>
@@ -6302,8 +6303,8 @@ Frequency</property>
                                           <packing>
                                             <property name="left_attach">3</property>
                                             <property name="right_attach">4</property>
-                                            <property name="top_attach">5</property>
-                                            <property name="bottom_attach">6</property>
+                                            <property name="top_attach">6</property>
+                                            <property name="bottom_attach">7</property>
                                             <property name="x_options"></property>
                                             <property name="y_options"></property>
                                           </packing>
@@ -6320,8 +6321,8 @@ Frequency</property>
                                           <packing>
                                             <property name="left_attach">4</property>
                                             <property name="right_attach">5</property>
-                                            <property name="top_attach">5</property>
-                                            <property name="bottom_attach">6</property>
+                                            <property name="top_attach">6</property>
+                                            <property name="bottom_attach">7</property>
                                             <property name="x_options"></property>
                                             <property name="y_options"></property>
                                           </packing>
@@ -6338,8 +6339,8 @@ Frequency</property>
                                           <packing>
                                             <property name="left_attach">5</property>
                                             <property name="right_attach">6</property>
-                                            <property name="top_attach">5</property>
-                                            <property name="bottom_attach">6</property>
+                                            <property name="top_attach">6</property>
+                                            <property name="bottom_attach">7</property>
                                             <property name="x_options"></property>
                                             <property name="y_options"></property>
                                           </packing>
@@ -6356,8 +6357,8 @@ Frequency</property>
                                           <packing>
                                             <property name="left_attach">5</property>
                                             <property name="right_attach">6</property>
-                                            <property name="top_attach">6</property>
-                                            <property name="bottom_attach">7</property>
+                                            <property name="top_attach">8</property>
+                                            <property name="bottom_attach">9</property>
                                             <property name="x_options"></property>
                                             <property name="y_options"></property>
                                           </packing>
@@ -6374,8 +6375,8 @@ Frequency</property>
                                           <packing>
                                             <property name="left_attach">4</property>
                                             <property name="right_attach">5</property>
-                                            <property name="top_attach">6</property>
-                                            <property name="bottom_attach">7</property>
+                                            <property name="top_attach">8</property>
+                                            <property name="bottom_attach">9</property>
                                             <property name="x_options"></property>
                                             <property name="y_options"></property>
                                           </packing>
@@ -6391,8 +6392,8 @@ Frequency</property>
                                           <packing>
                                             <property name="left_attach">3</property>
                                             <property name="right_attach">4</property>
-                                            <property name="top_attach">6</property>
-                                            <property name="bottom_attach">7</property>
+                                            <property name="top_attach">8</property>
+                                            <property name="bottom_attach">9</property>
                                             <property name="x_options"></property>
                                             <property name="y_options"></property>
                                           </packing>
@@ -6408,8 +6409,8 @@ Frequency</property>
                                           <packing>
                                             <property name="left_attach">2</property>
                                             <property name="right_attach">3</property>
-                                            <property name="top_attach">6</property>
-                                            <property name="bottom_attach">7</property>
+                                            <property name="top_attach">8</property>
+                                            <property name="bottom_attach">9</property>
                                             <property name="x_options"></property>
                                             <property name="y_options"></property>
                                           </packing>
@@ -6425,8 +6426,8 @@ Frequency</property>
                                           <packing>
                                             <property name="left_attach">2</property>
                                             <property name="right_attach">3</property>
-                                            <property name="top_attach">7</property>
-                                            <property name="bottom_attach">8</property>
+                                            <property name="top_attach">10</property>
+                                            <property name="bottom_attach">11</property>
                                             <property name="x_options"></property>
                                             <property name="y_options"></property>
                                           </packing>
@@ -6442,8 +6443,8 @@ Frequency</property>
                                           <packing>
                                             <property name="left_attach">3</property>
                                             <property name="right_attach">4</property>
-                                            <property name="top_attach">7</property>
-                                            <property name="bottom_attach">8</property>
+                                            <property name="top_attach">10</property>
+                                            <property name="bottom_attach">11</property>
                                             <property name="x_options"></property>
                                             <property name="y_options"></property>
                                           </packing>
@@ -6460,8 +6461,8 @@ Frequency</property>
                                           <packing>
                                             <property name="left_attach">4</property>
                                             <property name="right_attach">5</property>
-                                            <property name="top_attach">7</property>
-                                            <property name="bottom_attach">8</property>
+                                            <property name="top_attach">10</property>
+                                            <property name="bottom_attach">11</property>
                                             <property name="x_options"></property>
                                             <property name="y_options"></property>
                                           </packing>
@@ -6478,8 +6479,8 @@ Frequency</property>
                                           <packing>
                                             <property name="left_attach">5</property>
                                             <property name="right_attach">6</property>
-                                            <property name="top_attach">7</property>
-                                            <property name="bottom_attach">8</property>
+                                            <property name="top_attach">10</property>
+                                            <property name="bottom_attach">11</property>
                                             <property name="x_options"></property>
                                             <property name="y_options"></property>
                                           </packing>
@@ -6490,40 +6491,6 @@ Frequency</property>
                                             <property name="label" translatable="yes">Scale</property>
                                           </object>
                                           <packing>
-                                            <property name="top_attach">1</property>
-                                            <property name="bottom_attach">2</property>
-                                            <property name="x_options"></property>
-                                            <property name="y_options"></property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkEntry" id="align_sizex">
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">True</property>
-                                            <property name="invisible_char">&#x25CF;</property>
-                                            <property name="width_chars">6</property>
-                                            <property name="text" translatable="yes">828</property>
-                                          </object>
-                                          <packing>
-                                            <property name="left_attach">4</property>
-                                            <property name="right_attach">5</property>
-                                            <property name="top_attach">1</property>
-                                            <property name="bottom_attach">2</property>
-                                            <property name="x_options"></property>
-                                            <property name="y_options"></property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkEntry" id="align_sizey">
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">True</property>
-                                            <property name="invisible_char">&#x25CF;</property>
-                                            <property name="width_chars">6</property>
-                                            <property name="text" translatable="yes">600</property>
-                                          </object>
-                                          <packing>
-                                            <property name="left_attach">5</property>
-                                            <property name="right_attach">6</property>
                                             <property name="top_attach">1</property>
                                             <property name="bottom_attach">2</property>
                                             <property name="x_options"></property>
@@ -6558,8 +6525,8 @@ Frequency</property>
                                           <packing>
                                             <property name="left_attach">1</property>
                                             <property name="right_attach">2</property>
-                                            <property name="top_attach">5</property>
-                                            <property name="bottom_attach">6</property>
+                                            <property name="top_attach">6</property>
+                                            <property name="bottom_attach">7</property>
                                             <property name="x_options"></property>
                                             <property name="y_options"></property>
                                           </packing>
@@ -6575,8 +6542,8 @@ Frequency</property>
                                           <packing>
                                             <property name="left_attach">1</property>
                                             <property name="right_attach">2</property>
-                                            <property name="top_attach">6</property>
-                                            <property name="bottom_attach">7</property>
+                                            <property name="top_attach">8</property>
+                                            <property name="bottom_attach">9</property>
                                             <property name="x_options"></property>
                                             <property name="y_options"></property>
                                           </packing>
@@ -6592,8 +6559,8 @@ Frequency</property>
                                           <packing>
                                             <property name="left_attach">1</property>
                                             <property name="right_attach">2</property>
-                                            <property name="top_attach">7</property>
-                                            <property name="bottom_attach">8</property>
+                                            <property name="top_attach">10</property>
+                                            <property name="bottom_attach">11</property>
                                             <property name="x_options"></property>
                                             <property name="y_options"></property>
                                           </packing>
@@ -6624,8 +6591,8 @@ Frequency</property>
                                           <packing>
                                             <property name="left_attach">2</property>
                                             <property name="right_attach">6</property>
-                                            <property name="top_attach">8</property>
-                                            <property name="bottom_attach">9</property>
+                                            <property name="top_attach">12</property>
+                                            <property name="bottom_attach">13</property>
                                             <property name="y_options"></property>
                                           </packing>
                                         </child>
@@ -6652,8 +6619,8 @@ Frequency</property>
                                           <packing>
                                             <property name="left_attach">6</property>
                                             <property name="right_attach">7</property>
-                                            <property name="top_attach">8</property>
-                                            <property name="bottom_attach">9</property>
+                                            <property name="top_attach">12</property>
+                                            <property name="bottom_attach">13</property>
                                             <property name="x_options"></property>
                                             <property name="y_options"></property>
                                           </packing>
@@ -6679,8 +6646,8 @@ Frequency</property>
                                             <property name="label" translatable="yes">Scale</property>
                                           </object>
                                           <packing>
-                                            <property name="top_attach">8</property>
-                                            <property name="bottom_attach">9</property>
+                                            <property name="top_attach">12</property>
+                                            <property name="bottom_attach">13</property>
                                             <property name="x_options"></property>
                                             <property name="y_options"></property>
                                           </packing>
@@ -6691,8 +6658,8 @@ Frequency</property>
                                             <property name="label" translatable="yes">Mean Error</property>
                                           </object>
                                           <packing>
-                                            <property name="top_attach">9</property>
-                                            <property name="bottom_attach">10</property>
+                                            <property name="top_attach">13</property>
+                                            <property name="bottom_attach">14</property>
                                             <property name="x_options"></property>
                                             <property name="y_options"></property>
                                           </packing>
@@ -6709,21 +6676,9 @@ Frequency</property>
                                           <packing>
                                             <property name="left_attach">2</property>
                                             <property name="right_attach">6</property>
-                                            <property name="top_attach">9</property>
-                                            <property name="bottom_attach">10</property>
+                                            <property name="top_attach">13</property>
+                                            <property name="bottom_attach">14</property>
                                             <property name="y_options"></property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkImage" id="align_image2">
-                                            <property name="visible">True</property>
-                                            <property name="stock">gtk-missing-image</property>
-                                          </object>
-                                          <packing>
-                                            <property name="left_attach">6</property>
-                                            <property name="right_attach">7</property>
-                                            <property name="top_attach">5</property>
-                                            <property name="bottom_attach">6</property>
                                           </packing>
                                         </child>
                                         <child>
@@ -6760,27 +6715,15 @@ marker coordinates</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkImage" id="align_image1">
+                                          <object class="GtkImage" id="align_image_th4">
                                             <property name="visible">True</property>
                                             <property name="stock">gtk-missing-image</property>
                                           </object>
                                           <packing>
-                                            <property name="left_attach">6</property>
-                                            <property name="right_attach">7</property>
-                                            <property name="top_attach">4</property>
-                                            <property name="bottom_attach">5</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkImage" id="align_image3">
-                                            <property name="visible">True</property>
-                                            <property name="stock">gtk-missing-image</property>
-                                          </object>
-                                          <packing>
-                                            <property name="left_attach">6</property>
-                                            <property name="right_attach">7</property>
-                                            <property name="top_attach">6</property>
-                                            <property name="bottom_attach">7</property>
+                                            <property name="left_attach">5</property>
+                                            <property name="right_attach">6</property>
+                                            <property name="top_attach">11</property>
+                                            <property name="bottom_attach">12</property>
                                           </packing>
                                         </child>
                                         <child>
@@ -6789,8 +6732,56 @@ marker coordinates</property>
                                             <property name="stock">gtk-missing-image</property>
                                           </object>
                                           <packing>
-                                            <property name="left_attach">6</property>
-                                            <property name="right_attach">7</property>
+                                            <property name="left_attach">4</property>
+                                            <property name="right_attach">5</property>
+                                            <property name="top_attach">11</property>
+                                            <property name="bottom_attach">12</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkImage" id="align_image_th3">
+                                            <property name="visible">True</property>
+                                            <property name="stock">gtk-missing-image</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">5</property>
+                                            <property name="right_attach">6</property>
+                                            <property name="top_attach">9</property>
+                                            <property name="bottom_attach">10</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkImage" id="align_image3">
+                                            <property name="visible">True</property>
+                                            <property name="stock">gtk-missing-image</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">4</property>
+                                            <property name="right_attach">5</property>
+                                            <property name="top_attach">9</property>
+                                            <property name="bottom_attach">10</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkImage" id="align_image_th2">
+                                            <property name="visible">True</property>
+                                            <property name="stock">gtk-missing-image</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">5</property>
+                                            <property name="right_attach">6</property>
+                                            <property name="top_attach">7</property>
+                                            <property name="bottom_attach">8</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkImage" id="align_image2">
+                                            <property name="visible">True</property>
+                                            <property name="stock">gtk-missing-image</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">4</property>
+                                            <property name="right_attach">5</property>
                                             <property name="top_attach">7</property>
                                             <property name="bottom_attach">8</property>
                                           </packing>
@@ -6801,47 +6792,125 @@ marker coordinates</property>
                                             <property name="stock">gtk-missing-image</property>
                                           </object>
                                           <packing>
-                                            <property name="left_attach">7</property>
-                                            <property name="right_attach">8</property>
-                                            <property name="top_attach">4</property>
-                                            <property name="bottom_attach">5</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkImage" id="align_image_th2">
-                                            <property name="visible">True</property>
-                                            <property name="stock">gtk-missing-image</property>
-                                          </object>
-                                          <packing>
-                                            <property name="left_attach">7</property>
-                                            <property name="right_attach">8</property>
+                                            <property name="left_attach">5</property>
+                                            <property name="right_attach">6</property>
                                             <property name="top_attach">5</property>
                                             <property name="bottom_attach">6</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkImage" id="align_image_th3">
+                                          <object class="GtkImage" id="align_image1">
                                             <property name="visible">True</property>
                                             <property name="stock">gtk-missing-image</property>
                                           </object>
                                           <packing>
-                                            <property name="left_attach">7</property>
-                                            <property name="right_attach">8</property>
-                                            <property name="top_attach">6</property>
-                                            <property name="bottom_attach">7</property>
+                                            <property name="left_attach">4</property>
+                                            <property name="right_attach">5</property>
+                                            <property name="top_attach">5</property>
+                                            <property name="bottom_attach">6</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkImage" id="align_image_th4">
-                                            <property name="visible">True</property>
-                                            <property name="stock">gtk-missing-image</property>
-                                          </object>
-                                          <packing>
-                                            <property name="left_attach">7</property>
-                                            <property name="right_attach">8</property>
-                                            <property name="top_attach">7</property>
-                                            <property name="bottom_attach">8</property>
-                                          </packing>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
                                         </child>
                                         <child>
                                           <placeholder/>
@@ -7170,7 +7239,273 @@ marker coordinates</property>
                               <placeholder/>
                             </child>
                             <child>
-                              <placeholder/>
+                              <object class="GtkNotebook" id="notebook2">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <child>
+                                  <object class="GtkVBox" id="vbox8">
+                                    <property name="visible">True</property>
+                                    <child>
+                                      <object class="GtkFileChooserButton" id="align_optfile">
+                                        <property name="visible">True</property>
+                                        <signal name="file_set" handler="align_optfile_file_set_cb"/>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkScrolledWindow" id="scrolledwindow8">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="hscrollbar_policy">automatic</property>
+                                        <property name="vscrollbar_policy">automatic</property>
+                                        <child>
+                                          <object class="GtkViewport" id="viewport8">
+                                            <property name="visible">True</property>
+                                            <property name="resize_mode">queue</property>
+                                            <child>
+                                              <object class="GtkImage" id="align_optimage">
+                                                <property name="visible">True</property>
+                                                <property name="stock">gtk-missing-image</property>
+                                                <signal name="button_press_event" handler="align_boing"/>
+                                                <signal name="event" handler="align_boing"/>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child type="tab">
+                                  <object class="GtkLabel" id="label168">
+                                    <property name="visible">True</property>
+                                    <property name="label" translatable="yes">Optical Image</property>
+                                  </object>
+                                  <packing>
+                                    <property name="tab_fill">False</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkVBox" id="vbox9">
+                                    <property name="visible">True</property>
+                                    <child>
+                                      <object class="GtkTable" id="table32">
+                                        <property name="visible">True</property>
+                                        <property name="n_rows">3</property>
+                                        <property name="n_columns">3</property>
+                                        <child>
+                                          <object class="GtkButton" id="align_semscan_button">
+                                            <property name="label" translatable="yes">Take Image</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">2</property>
+                                            <property name="right_attach">3</property>
+                                            <property name="x_options"></property>
+                                            <property name="y_options"></property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="label171">
+                                            <property name="visible">True</property>
+                                            <property name="label" translatable="yes">Number of X pixels</property>
+                                          </object>
+                                          <packing>
+                                            <property name="x_options"></property>
+                                            <property name="y_options"></property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="label172">
+                                            <property name="visible">True</property>
+                                            <property name="label" translatable="yes">Number of Y pixels</property>
+                                          </object>
+                                          <packing>
+                                            <property name="top_attach">1</property>
+                                            <property name="bottom_attach">2</property>
+                                            <property name="x_options"></property>
+                                            <property name="y_options"></property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="label173">
+                                            <property name="visible">True</property>
+                                            <property name="label" translatable="yes">Points per pixel</property>
+                                          </object>
+                                          <packing>
+                                            <property name="top_attach">2</property>
+                                            <property name="bottom_attach">3</property>
+                                            <property name="x_options"></property>
+                                            <property name="y_options"></property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkEntry" id="align_numpoints">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="invisible_char">&#x25CF;</property>
+                                            <property name="width_chars">6</property>
+                                            <property name="text" translatable="yes">1</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">1</property>
+                                            <property name="right_attach">2</property>
+                                            <property name="top_attach">2</property>
+                                            <property name="bottom_attach">3</property>
+                                            <property name="x_options"></property>
+                                            <property name="y_options"></property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkEntry" id="align_sizex">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="invisible_char">&#x25CF;</property>
+                                            <property name="width_chars">6</property>
+                                            <property name="text" translatable="yes">828</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">1</property>
+                                            <property name="right_attach">2</property>
+                                            <property name="x_options"></property>
+                                            <property name="y_options"></property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <object class="GtkEntry" id="align_sizey">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="invisible_char">&#x25CF;</property>
+                                            <property name="width_chars">6</property>
+                                            <property name="text" translatable="yes">600</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">1</property>
+                                            <property name="right_attach">2</property>
+                                            <property name="top_attach">1</property>
+                                            <property name="bottom_attach">2</property>
+                                            <property name="x_options"></property>
+                                            <property name="y_options"></property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkScrolledWindow" id="scrolledwindow9">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="hscrollbar_policy">automatic</property>
+                                        <property name="vscrollbar_policy">automatic</property>
+                                        <child>
+                                          <object class="GtkViewport" id="viewport9">
+                                            <property name="visible">True</property>
+                                            <property name="resize_mode">queue</property>
+                                            <child>
+                                              <object class="GtkImage" id="align_semimage">
+                                                <property name="visible">True</property>
+                                                <property name="stock">gtk-missing-image</property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                                <child type="tab">
+                                  <object class="GtkLabel" id="label169">
+                                    <property name="visible">True</property>
+                                    <property name="label" translatable="yes">SEM Image</property>
+                                  </object>
+                                  <packing>
+                                    <property name="position">1</property>
+                                    <property name="tab_fill">False</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkTable" id="align">
+                                    <property name="visible">True</property>
+                                    <property name="n_rows">3</property>
+                                    <property name="n_columns">3</property>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="position">2</property>
+                                  </packing>
+                                </child>
+                                <child type="tab">
+                                  <object class="GtkLabel" id="label170">
+                                    <property name="visible">True</property>
+                                    <property name="label" translatable="yes">Align Plot</property>
+                                  </object>
+                                  <packing>
+                                    <property name="position">2</property>
+                                    <property name="tab_fill">False</property>
+                                  </packing>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="right_attach">2</property>
+                              </packing>
                             </child>
                           </object>
                           <packing>

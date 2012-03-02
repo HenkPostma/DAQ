@@ -589,6 +589,17 @@ class DaqWindow(gtk.Window):
         self.builder.get_object("im_message").set_text("DAQ started on " + hostname)        
         self.im_send(None)
 
+    def align_boing(self, widget, data):
+        print type(data)
+        print "boing!"
+        
+        
+    def align_optfile_file_set_cb(self, widget):
+        filename = self.builder.get_object("align_optfile").get_filename()
+        image = self.builder.get_object("align_optimage")
+        image.set_from_file(filename)
+        
+
     def change_directory(self, widget): 
         global directory    
         directory = self.builder.get_object("directory").get_text()
