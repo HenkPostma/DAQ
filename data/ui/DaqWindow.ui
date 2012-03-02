@@ -5902,7 +5902,6 @@ Frequency</property>
                                           <object class="GtkEntry" id="align_mag">
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
-                                            <property name="editable">False</property>
                                             <property name="invisible_char">&#x25CF;</property>
                                             <property name="width_chars">7</property>
                                             <property name="text" translatable="yes">100</property>
