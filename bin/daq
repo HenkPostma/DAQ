@@ -589,14 +589,29 @@ class DaqWindow(gtk.Window):
         self.builder.get_object("im_message").set_text("DAQ started on " + hostname)        
         self.im_send(None)
 
-    def align_boing(self, widget, data):
-        print type(data)
+
+    def button_press_event(self, widget, event):
         print "boing!"
-        
+        print widget.get_name()
+        print self.get_name()
+        print event
+
+    def align_markerselect(self, widget, event):
+        print "boing! drag drop"
+        print widget
+        print event
+
         
     def align_optfile_file_set_cb(self, widget):
         filename = self.builder.get_object("align_optfile").get_filename()
         image = self.builder.get_object("align_optimage")
+#        eventbox = self.builder.get_object("align_optimage_eventbox") 
+#        image.connect("button_press_event", button_press_event)
+#        image.set_events(gtk.gdk.EXPOSURE_MASK |
+#                            gtk.gdk.LEAVE_NOTIFY_MASK |
+#                            gtk.gdk.BUTTON_PRESS_MASK |
+#                            gtk.gdk.POINTER_MOTION_MASK |
+#                            gtk.gdk.POINTER_MOTION_HINT_MASK)
         image.set_from_file(filename)
         
 

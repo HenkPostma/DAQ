@@ -7218,27 +7218,6 @@ marker coordinates</property>
                               </packing>
                             </child>
                             <child>
-                              <placeholder/>
-                            </child>
-                            <child>
-                              <placeholder/>
-                            </child>
-                            <child>
-                              <placeholder/>
-                            </child>
-                            <child>
-                              <placeholder/>
-                            </child>
-                            <child>
-                              <placeholder/>
-                            </child>
-                            <child>
-                              <placeholder/>
-                            </child>
-                            <child>
-                              <placeholder/>
-                            </child>
-                            <child>
                               <object class="GtkNotebook" id="notebook2">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -7267,11 +7246,17 @@ marker coordinates</property>
                                             <property name="visible">True</property>
                                             <property name="resize_mode">queue</property>
                                             <child>
-                                              <object class="GtkImage" id="align_optimage">
+                                              <object class="GtkEventBox" id="align_optimage_eventbox">
                                                 <property name="visible">True</property>
-                                                <property name="stock">gtk-missing-image</property>
-                                                <signal name="button_press_event" handler="align_boing"/>
-                                                <signal name="event" handler="align_boing"/>
+                                                <signal name="button_press_event" handler="button_press_event"/>
+                                                <child>
+                                                  <object class="GtkImage" id="align_optimage">
+                                                    <property name="visible">True</property>
+                                                    <property name="xalign">0</property>
+                                                    <property name="yalign">0</property>
+                                                    <property name="stock">gtk-missing-image</property>
+                                                  </object>
+                                                </child>
                                               </object>
                                             </child>
                                           </object>
@@ -7384,12 +7369,6 @@ marker coordinates</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <placeholder/>
-                                        </child>
-                                        <child>
-                                          <placeholder/>
-                                        </child>
-                                        <child>
                                           <object class="GtkEntry" id="align_sizey">
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
@@ -7405,6 +7384,12 @@ marker coordinates</property>
                                             <property name="x_options"></property>
                                             <property name="y_options"></property>
                                           </packing>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
                                         </child>
                                       </object>
                                       <packing>
@@ -7506,6 +7491,27 @@ marker coordinates</property>
                                 <property name="left_attach">1</property>
                                 <property name="right_attach">2</property>
                               </packing>
+                            </child>
+                            <child>
+                              <placeholder/>
+                            </child>
+                            <child>
+                              <placeholder/>
+                            </child>
+                            <child>
+                              <placeholder/>
+                            </child>
+                            <child>
+                              <placeholder/>
+                            </child>
+                            <child>
+                              <placeholder/>
+                            </child>
+                            <child>
+                              <placeholder/>
+                            </child>
+                            <child>
+                              <placeholder/>
                             </child>
                           </object>
                           <packing>
