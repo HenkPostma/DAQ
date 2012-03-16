@@ -657,7 +657,27 @@ class DaqWindow(gtk.Window):
         adj = im_scroll.get_adjustment()
 #        print adj.upper
         im_scroll.set_value(adj.upper)
-           
+        
+    def align_marksearch(self, widget):
+        images = []
+        imagedir = self.builder.get_object("alignimagedirectory").get_text()
+        for i in range(0, 4):
+            try:
+                if self.builder.get_object("align_mark" + str(i+1) + "_on").get_active():
+                    optx.append(float(self.builder.get_object("align_mark" + str(i+1) + "_optx").get_text()))
+                    opty.append(float(self.builder.get_object("align_mark" + str(i+1) + "_opty").get_text()))
+                    images.append(imagedir + "/" + hostname + "." + str(i+1))
+                    image = self.builder.get_object("align_image" + str(i+1))
+                    image.set_from_file(imagedir + hostname + "." + str(i+1) + ".png")                  
+                    image = self.builder.get_object("align_image_th" + str(i+1))
+                    image.set_from_file(imagedir + hostname + "." + str(i+1) + ".thresh.png")
+            except:
+                self.builder.get_object("statusbar1").push(0, "Marker " + str(i+1) + " coordinates invalid")
+                return                        
+        print images            
+       
+       
+       
     def align_xform(self, widget):
         optx = []
         opty = []
@@ -671,7 +691,8 @@ class DaqWindow(gtk.Window):
                     opty.append(float(self.builder.get_object("align_mark" + str(i+1) + "_opty").get_text()))
                     images.append(imagedir + "/" + hostname + "." + str(i+1))
                     image = self.builder.get_object("align_image" + str(i+1))
-                    image.set_from_file(imagedir + hostname + "." + str(i+1) + ".png.m.png")                  
+                    image.set_from_file(imagedir + hostname + "." + str(i+1) + ".png")              
+
                     image = self.builder.get_object("align_image_th" + str(i+1))
                     image.set_from_file(imagedir + hostname + "." + str(i+1) + ".thresh.png")
             except:
@@ -679,7 +700,11 @@ class DaqWindow(gtk.Window):
                 return                        
         print images
         
-        
+        print type(image) # .get_image()
+        image.get_pixmap()
+#        for j in range(2,100):
+#            imbuf.put_pixel(10,j, 0.5)
+                                
         try: 
             sizex = float(self.builder.get_object("align_sizex").get_text())
         except:
