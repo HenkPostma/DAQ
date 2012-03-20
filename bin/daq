@@ -24,6 +24,7 @@ import glob
 import datetime
 import fcntl 
 import re
+import gd
 
 import gobject 
 
@@ -39,6 +40,8 @@ global im_buffer
 global im_scroll
 global directory 
 directory = ""
+global alignsett # for holding previous settings for alignment
+alignsett = {} 
 
 # optional Launchpad integration
 # this shouldn't crash if not found as it is simply used for bug reporting
@@ -66,6 +69,25 @@ imgext2 = "png"
 gpibwrite = "/home/bin/gpib-write"
 
 device = "/dev/comedi0"
+
+# Globals
+storagedir = '/tmp/'
+alignresultsfile = storagedir + 'results.txt'
+octavefile = storagedir + 'findmarker.m'
+settingsfile = storagedir + 'settings.txt'
+markerimagefile = "/tmp/markerimagefile.txt"
+
+# Functions
+def loadsettings():
+    settings = dict()
+    settingsfh = open(settingsfile, 'r')
+    for line in settingsfh.readlines():
+        (key, value) = line[:-1].split(' ')
+        settings[key] = value
+    settingsfh.close()
+    return settings
+
+
 
 def SetComediDevice():
     if os.path.isfile("/proc/comedi"):
@@ -139,22 +161,22 @@ from daq import AboutDaqDialog, PreferencesDaqDialog
 from daq.daqconfig import getdatapath
 
 def diowrite(subdevice, channel, data):
-	dev = comedi.comedi_open("/dev/comedi0")
-	ret1 = comedi.comedi_dio_config(dev, subdevice, channel, comedi.COMEDI_OUTPUT)
+    dev = comedi.comedi_open("/dev/comedi0")
+    ret1 = comedi.comedi_dio_config(dev, subdevice, channel, comedi.COMEDI_OUTPUT)
 
-	if ret1 == 1:
-		pass
-	else:
-		print "initialisation failed"
-		
-	ret=comedi.comedi_dio_write(dev, subdevice, channel, data)
+    if ret1 == 1:
+        pass
+    else:
+        print "initialisation failed"
+        
+    ret=comedi.comedi_dio_write(dev, subdevice, channel, data)
 
-	if ret == 1:
-		pass
-	else:
-		print "setting failed"
-	comedi.comedi_close(dev)
-	
+    if ret == 1:
+        pass
+    else:
+        print "setting failed"
+    comedi.comedi_close(dev)
+    
 def writeline(delayperpoint,vx,vy,dvx,dvy,N):
     beamblank()
     for i in range(0, N+1):
@@ -203,49 +225,49 @@ def timedbeamunblank(delay):
 
     comedi.comedi_close(dev)
     
-	
+    
 def acquirecontrol():
-	diowrite(2, 1, 1)
+    diowrite(2, 1, 1)
 
 def releasecontrol():
-	diowrite(2, 1, 0)
+    diowrite(2, 1, 0)
 
 def beamblank():
-	diowrite(2, 0, 1)
-	
+    diowrite(2, 0, 1)
+    
 def beamunblank():
-	diowrite(2, 0, 0)
-	
+    diowrite(2, 0, 0)
+    
 def getimage(nx, ny, n):
-	dev = comedi.comedi_open("/dev/comedi0")
-	outsubdevice = 1
-	insubdevice = 0
-	xchannel = 0
-	ychannel = 1
-	inchannel = 0
-	analogref = comedi.AREF_GROUND
-	arange =  0
-	
-	image = numpy.zeros((nx,ny), float)
-	
-	for y in range(0, ny):
-		write_data = int(  (float(y)/(ny-1) ) * 65535)	
-		msg = comedi.comedi_data_write(dev, outsubdevice, ychannel, arange, analogref, write_data)
-		for x in range(0, nx):
-			write_data = int(  (float(x)/(nx-1) ) * 65535)
-			msg = comedi.comedi_data_write(dev, outsubdevice, xchannel, arange, analogref, write_data)
-			pixel = 0.0
-			for i in range(0, n):
-				result = comedi.comedi_data_read(dev,insubdevice,inchannel,arange,analogref)
-				pixel = pixel + float(result[1])
-			pixel = pixel/n
-#			print pixel,
-			msg=result[0]
-			image[x][y] = pixel
-#		print
-		
-	comedi.comedi_close(dev)
-	return pixel
+    dev = comedi.comedi_open("/dev/comedi0")
+    outsubdevice = 1
+    insubdevice = 0
+    xchannel = 0
+    ychannel = 1
+    inchannel = 0
+    analogref = comedi.AREF_GROUND
+    arange =  0
+    
+    image = numpy.zeros((nx,ny), float)
+    
+    for y in range(0, ny):
+        write_data = int(  (float(y)/(ny-1) ) * 65535)  
+        msg = comedi.comedi_data_write(dev, outsubdevice, ychannel, arange, analogref, write_data)
+        for x in range(0, nx):
+            write_data = int(  (float(x)/(nx-1) ) * 65535)
+            msg = comedi.comedi_data_write(dev, outsubdevice, xchannel, arange, analogref, write_data)
+            pixel = 0.0
+            for i in range(0, n):
+                result = comedi.comedi_data_read(dev,insubdevice,inchannel,arange,analogref)
+                pixel = pixel + float(result[1])
+            pixel = pixel/n
+#           print pixel,
+            msg=result[0]
+            image[x][y] = pixel
+#       print
+        
+    comedi.comedi_close(dev)
+    return pixel
 
 def sety(voltage):
     dev = comedi.comedi_open("/dev/comedi0")
@@ -259,7 +281,7 @@ def sety(voltage):
     write_data = int(  (float(voltage)+10)/20*65535)
     msg = comedi.comedi_data_write(dev, outsubdevice, ychannel, arange, analogref, write_data)
     comedi.comedi_close(dev)
-	
+    
 def setx(voltage):
     dev = comedi.comedi_open("/dev/comedi0")
     outsubdevice = 1
@@ -272,7 +294,7 @@ def setx(voltage):
     write_data = int(  (float(voltage)+10)/20*65535)
     msg = comedi.comedi_data_write(dev, outsubdevice, xchannel, arange, analogref, write_data)
     comedi.comedi_close(dev)
-			
+            
 def imagecapture_part(xb, yb, xe, ye, nx, ny, n):
     dev = comedi.comedi_open("/dev/comedi0")
     outsubdevice = 1
@@ -284,7 +306,7 @@ def imagecapture_part(xb, yb, xe, ye, nx, ny, n):
     arange =  0
 
     image = numpy.zeros((nx,ny), float)
-	
+    
     for y in range(ny, 0, -1):
         y = y-1
         write_data = int(  (float(y)/(ny-1) *(ye-yb) + yb ) * 65535)
@@ -302,7 +324,7 @@ def imagecapture_part(xb, yb, xe, ye, nx, ny, n):
             msg=result[0]
             image[x][y] = pixel
         print
-		
+        
     comedi.comedi_close(dev)
     return image
 
@@ -459,7 +481,8 @@ def im_get_new():
 
     if newmesgs: 
         try:
-            os.system("beep")
+            # os.system("beep")
+                pass
         except:
             print "beep! (can't run 'beep', is it installed?)"
     
@@ -675,36 +698,309 @@ class DaqWindow(gtk.Window):
                 self.builder.get_object("statusbar1").push(0, "Marker " + str(i+1) + " coordinates invalid")
                 return                        
         print images            
-       
-       
-       
-    def align_xform(self, widget):
+
+    def align_loadimg(self, widget):
+        import gd
+        im = gd.image((200, 200))
+        
         optx = []
         opty = []
         opt = []
         images = []
         imagedir = self.builder.get_object("alignimagedirectory").get_text()
-        for i in range(0, 4):
+        for i in range(0, 1):
             try:
                 if self.builder.get_object("align_mark" + str(i+1) + "_on").get_active():
-                    optx.append(float(self.builder.get_object("align_mark" + str(i+1) + "_optx").get_text()))
-                    opty.append(float(self.builder.get_object("align_mark" + str(i+1) + "_opty").get_text()))
-                    images.append(imagedir + "/" + hostname + "." + str(i+1))
-                    image = self.builder.get_object("align_image" + str(i+1))
+                    orgfile = imagedir + hostname + "." + str(i+1) + ".png"
+                    
                     image.set_from_file(imagedir + hostname + "." + str(i+1) + ".png")              
 
                     image = self.builder.get_object("align_image_th" + str(i+1))
                     image.set_from_file(imagedir + hostname + "." + str(i+1) + ".thresh.png")
             except:
                 self.builder.get_object("statusbar1").push(0, "Marker " + str(i+1) + " coordinates invalid")
-                return                        
+                return     
+                
+    def align_thresh(self, widget): 
+        imagedir = self.builder.get_object("alignimagedirectory").get_text()
+        global alignsett
+        print alignsett
+        for i in range(0,4):
+            try:
+                th = float(self.builder.get_object("align_mark" + str(i+1) + "_threshold").get_text())
+                alignsizex = float(self.builder.get_object("align_sizex").get_text())
+                alignsizey = float(self.builder.get_object("align_sizey").get_text())
+
+                doit = False
+                if "threshold"+str(i+1) in alignsett:
+                    if alignsett["threshold"+str(i+1)] == th:
+                        pass
+                    else:
+                        doit = True
+                else:
+                    doit = True
+
+                if doit:
+                    alignsett["threshold"+str(i+1)] = th
+                    print "redoing threshold " + str(i+1)
+                    img = gd.image("/tmp/" + hostname + "." + user + "." + str(i+1) + ".filter.png")
+        #            try:
+                    white = img.colorAllocate((255,255,255))
+                    black = img.colorAllocate((0,0,0))
+
+                    width, height = img.size()
+                    immax = img.getPixel((0,0))
+                    immin = img.getPixel((0,0))
+                    for x in range(0, width):
+                        for j in range(0, height):
+                            r,g,b = img.colorComponents(img.getPixel((x,j)))
+                            value = (float(r) + float(g) + float(b))/3
+                            if value > immax:
+                                immax = value
+                            if value < immin:
+                                immin = value
+#                    print "immin ", immin
+#                    print "immax ", immax
+
+                    xm = 0 # for center of mass: x
+                    ym = 0 # for center of mass: y
+                    count = 0
+                    for x in range(0, width):
+                        for j in range(0, height):
+                            r,g,b = img.colorComponents(img.getPixel((x,j)))
+                            value = (float(r) + float(g) + float(b))/3
+                            value = float( (value-immin))/(immax-immin)
+                            if value > th:
+                                xm = xm + x
+                                ym = ym + j
+                                count = count + 1                                
+                                img.setPixel((x,j), white)
+                            else:
+                                img.setPixel((x,j), black)
+
+                    xm = float(xm)/float(count)
+                    ym = float(ym)/float(count)
+
+
+
+                    img.writePng("/tmp/" + hostname + "." + user + "." + str(i+1) + ".thresh.png")
+                    image = self.builder.get_object("align_mark_th" + str(i+1))
+                    image.set_from_file("/tmp/" + hostname + "." + user + "." + str(i+1) + ".thresh.png")
+                    
+                    # drawing red lines where the center of the marker is
+                    img=gd.image("/tmp/" + hostname + "." + user + "." + str(i+1) + ".init.png")
+                    red = img.colorAllocate((255,0,0))                    
+                    img.line((int(round(xm)),0), (int(round(xm)),height), red)
+
+                    img.line((0,int(round(ym))), (width, int(round(ym))), red)
+                    filename = "/tmp/" + hostname + "." + user + "." + str(i+1) + ".cross.png"
+                    img.writePng(filename)
+                    image = self.builder.get_object("align_mark" + str(i+1))
+                    image.set_from_file(filename)
+
+                    # making it into a pixel offset
+#                    xm = xm-float(width)/2
+#                    ym = ym-float(height)/2
+
+
+
+                    # convert pixel offset to volt offset
+                    # convert voltoffset to absolute pixels
+                    fh=open(markerimagefile, 'r')
+                    linecount=0
+                    for line in fh.readlines():
+                        if linecount == i:
+                            lst = line.split(' ')
+                            print line
+                            print linecount
+                            print i
+                            x0 = float(lst[1])
+                            y0 = float(lst[2])
+                            x1 = float(lst[3])
+                            y1 = float(lst[4])
+                            print "x0", x0
+                            print "x1", x1
+                            print "y0", y0
+                            print "y1", y1
+                        else:
+                            pass
+
+                        linecount = linecount + 1
+
+                    fh.close()  
+                    vx = x0 + (x1-x0)/width*xm
+                    vy = y0 + (y1-y0)/height*ym
+
+                    xpix = (0.5-vx/20)*alignsizex
+                    ypix = (-0.5+vy/20)*alignsizey
+
+                    self.builder.get_object("align_mark" + str(i+1) + "_semx").set_text(str(xpix))
+                    self.builder.get_object("align_mark" + str(i+1) + "_semy").set_text(str(ypix))
+
+#        my @align=alignstruct($struct, $filename, $sfilename, $count);
+#        my @center=centerofstruct($struct);
+
+#      my @volts=microntovolt(($layer, $align[0], $align[1]));
+
+#      my $xpix = (0.5-$volts[0]/$xvoltrange)*$settings{$layer."_xpixnum"};
+#      my $ypix = (-0.5+$volts[1]/$yvoltrange)*$settings{$layer."_ypixnum"};
+
+                    
+            except:
+                print "threshold " + str(i+1) + " invalid"
+
+            
+    def align_filter(self, widget): 
+        from subprocess import call
+        global alignsett
+
+        print alignsett
+
+        imagedir = self.builder.get_object("alignimagedirectory").get_text()
+        for i in range(0,4):
+            try:
+                filtersize = int(self.builder.get_object("align_mark" + str(i+1) + "_filtersize").get_text())
+                planefit = self.builder.get_object("mark_planefit"+str(i+1)).get_active()
+
+                doit = False
+                if "filtersize"+str(i+1) in alignsett:
+                    if (alignsett["filtersize"+str(i+1)] == filtersize) and (alignsett["planefit"+str(i+1)] == planefit):
+                        pass
+                    else:
+                        doit = True
+                else:
+                    doit = True          
+                if doit:
+                    print "redoing filtersize " + str(i+1)
+                    alignsett["filtersize"+str(i+1)] = filtersize
+                    alignsett["planefit"+str(i+1)] = planefit
+                    octavefile = "/tmp/" + user + hostname + ".m"
+                    outfilename = "/tmp/" + hostname + "." + user + "." + str(i+1) + ".filter.png"
+                    # Load settings from .txt
+                    #settings = loadsettings()
+
+
+                    # Build string interpolation dictionary for octavecode
+                    octavevars = {
+                        'imgfile': "/tmp/" + hostname + "." + user + "." + str(i+1) + ".init.png",
+                        'filtersize': filtersize,
+                        'outfile': outfilename,
+                        'planefit': "raw=raw-background;"
+                    }
+                    if not(planefit):
+                        octavevars["planefit"] = ""
+            
+                    # Build Octave code for writing
+                    # also subtract background slope                    
+                    octavecode = '''raw = double(imread('{imgfile}'));
+                    c(1:{filtersize}, 1:{filtersize})=1;
+                    if abs(sum(sum(c))) > 0,
+                        c = c/sum(sum(c));
+                    end;
+
+                    y=double((raw(:,1)+raw(:,end))/2);
+                    x = double([1:length(y)]');
+                    p = polyfit(x, y, 1);
+                    background=raw;
+                    for i = 1:size(raw,2),
+                        background(:,i) = p(1)*x + p(2);
+                    end;
+                    {planefit}                    
+                    filt2 = conv2(raw, c, 'same');
+                    minmin = min(min(filt2({filtersize}:end-{filtersize},{filtersize}:end-{filtersize})));
+                    filt2(1:ceil({filtersize}/2),:) = minmin;
+                    filt2(end-ceil({filtersize}/2):end,:) = minmin;
+                    filt2(:,1:ceil({filtersize}/2)) = minmin;
+                    filt2(:,ceil(end-{filtersize}/2):end) = minmin;            
+                    imwrite(filt2/max(max(filt2)), '{outfile}');
+                    '''.format(**octavevars)
+
+                    # Write Octave code
+                    octavefh = open(octavefile, 'w')
+                    octavefh.write(octavecode)
+                    octavefh.close()
+
+                    # Execute Octave code
+                    octavelogfh = open(octavefile+'.log', 'w')
+                    octaveerrfh = open(octavefile+'.err', 'w')
+                    call(['octave', octavefile], stdout=octavelogfh, stderr=octaveerrfh)
+                    octavelogfh.close()
+                    octaveerrfh.close()
+
+                    # end here
+
+                    image = self.builder.get_object("align_mark_filt" + str(i+1))
+                    image.set_from_file(outfilename)
+
+                    # and we need to do threshold again too, unsetting those keys
+                    alignsett["threshold"+str(i+1)] = None
+        #            except:
+            except:
+                print "filtersize " + str(i+1) + " invalid"
+
+        self.align_thresh(widget)
+    
+    def align_init_img(self, widget):
+        imagedir = self.builder.get_object("alignimagedirectory").get_text()
+        for i in range(0, 4):
+            try:
+                if self.builder.get_object("align_mark" + str(i+1) + "_on").get_active():
+                    images.append(imagedir + "/" + hostname + "." + str(i+1))
+                    image = self.builder.get_object("align_mark" + str(i+1))
+                    # load original image and put in new file
+                    im = gd.image(imagedir + hostname + "." + str(i+1) + ".png")
+                    im.writePng(imagedir + hostname + "." + user + "." + str(i+1) + ".init.png")
+                    image.set_from_file(imagedir + hostname + "." + str(i+1) + ".png")
+                    # 
+                    image = self.builder.get_object("align_mark_th" + str(i+1))
+                    im = gd.image(imagedir + hostname + "." + str(i+1) + ".png")
+                    im.writePng(imagedir + hostname + "." + user + "." + str(i+1) + ".thresh.png")
+                    image.set_from_file(imagedir + hostname + "." + str(i+1) + ".thresh.png")
+
+            except:
+                self.builder.get_object("statusbar1").push(0, "Marker " + str(i+1) + " coordinates invalid")
+                return          
+       
+       
+    def align_xform(self, widget):
+        global alignsett
+        alignsett = {} # resetting, because we're reloading
+        optx = []
+        opty = []
+        opt = []
+        images = []
+        imagedir = self.builder.get_object("alignimagedirectory").get_text()
+        for i in range(0, 4):
+#            try:
+                if self.builder.get_object("align_mark" + str(i+1) + "_on").get_active():
+                    optx.append(float(self.builder.get_object("align_mark" + str(i+1) + "_optx").get_text()))
+                    opty.append(float(self.builder.get_object("align_mark" + str(i+1) + "_opty").get_text()))
+                    images.append(imagedir + "/" + hostname + "." + str(i+1))
+                    images.append(imagedir + "/" + hostname + "." + str(i+1))
+                    image = self.builder.get_object("align_mark" + str(i+1))
+                    # load original image and put in new file
+                    im = gd.image(imagedir + hostname + "." + str(i+1) + ".png")
+                    im.writePng("/tmp/" + hostname + "." + user + "." + str(i+1) + ".init.png")
+                    image.set_from_file("/tmp/" + hostname + "." + user + "." + str(i+1) + ".init.png")
+                    # 
+#            except:
+ #               self.builder.get_object("statusbar1").push(0, "Marker " + str(i+1) + " coordinates invalid")
+  #              return                        
         print images
-        
-        print type(image) # .get_image()
-        image.get_pixmap()
-#        for j in range(2,100):
-#            imbuf.put_pixel(10,j, 0.5)
-                                
+             
+#        da = gtk.DrawingArea()
+#        da.set_size_request(200, 200)
+#        table = self.builder.get_object("align_table")
+#        table.attach(da, 4, 5, 1, 2)        
+#        win = widget.window
+#        width, height = win.get_size()
+#        pixmap = gtk.gdk.Pixmap(win, 200, 200)
+#        pixmap.draw_rectangle(widget.get_style().white_gc, True, 0, 0, 200, 200)
+#        pixmap.draw_rectangle(widget.get_style().black_gc, True,  100, 100, 3, 3)        
+#        print "width", width
+#        print height 
+#        da.show()
+                
         try: 
             sizex = float(self.builder.get_object("align_sizex").get_text())
         except:
