@@ -639,14 +639,9 @@ class DaqWindow(gtk.Window):
         imagedir = self.builder.get_object("alignimagedirectory").get_text()
         for i in range(0, 4):
             try:
-                if self.builder.get_object("align_mark" + str(i+1) + "_on").get_active():
-                    optx.append(float(self.builder.get_object("align_mark" + str(i+1) + "_optx").get_text()))
-                    opty.append(float(self.builder.get_object("align_mark" + str(i+1) + "_opty").get_text()))
-                    images.append(imagedir + "/" + hostname + "." + str(i+1))
-                    image = self.builder.get_object("align_image" + str(i+1))
-                    image.set_from_file(imagedir + hostname + "." + str(i+1) + ".png.m.png")                  
-                    image = self.builder.get_object("align_image_th" + str(i+1))
-                    image.set_from_file(imagedir + hostname + "." + str(i+1) + ".thresh.png")
+                optx.append(float(self.builder.get_object("align_mark" + str(i+1) + "_optx").get_text()))
+                opty.append(float(self.builder.get_object("align_mark" + str(i+1) + "_opty").get_text()))
+                images.append(imagedir + "/" + hostname + "." + str(i+1))
             except:
                 self.builder.get_object("statusbar1").push(0, "Marker " + str(i+1) + " coordinates invalid")
                 return                        
@@ -716,8 +711,8 @@ class DaqWindow(gtk.Window):
         
         x = data[:,0] + complex(0,1)*data[:,1]
       
-        print x     
-        print y
+        print "sem:", x     
+        print "opt:", y
 
         # rescaling coordinates        
         xavg = mean(x)
@@ -728,22 +723,44 @@ class DaqWindow(gtk.Window):
         Y = (y - yavg)/yr
         
         n = []
+        N = []
+        F = []
+        opt2sem = range(0, len(x))
+        sem2opt = range(0, len(x))
         for i in range(0, len(x)):
             index = argmin(abs(X-Y[i]))
+            print "sem:", index, "opt: ", i
+            opt2sem[i] = index
+            sem2opt[index] = i
             n.append(x[index])
+            if self.builder.get_object("align_mark" + str(i+1) + "_on").get_active():
+                N.append(x[i])
+                F.append(y[i])
+            
 #            n[i] = x[index]
 #            print index
+        
 
-        x = array(n)
+#        x = array(n)
         
         try:
             for i in range(0, len(data)):
-                self.builder.get_object("align_mark" + str(i+1) + "_semx").set_text(str(real(x[i])))
-                self.builder.get_object("align_mark" + str(i+1) + "_semy").set_text(str(imag(x[i])))
+                self.builder.get_object("align_mark" + str(i+1) + "_semx").set_text(str(real(x[opt2sem[i]])))
+                self.builder.get_object("align_mark" + str(i+1) + "_semy").set_text(str(imag(x[opt2sem[i]])))
+                image = self.builder.get_object("align_image" + str(i+1))
+                image.set_from_file(imagedir + hostname + "." + str(opt2sem[i]+1) + ".png.m.png")                  
+                image = self.builder.get_object("align_image_th" + str(i+1))
+                image.set_from_file(imagedir + hostname + "." + str(opt2sem[i]+1) + ".thresh.png")                
         except:
             self.builder.get_object("statusbar1").push(0, "Error, too many markers in file? (length = " + str(len(x)+1))
             return
         
+        
+        # NOW x is in order of OPT
+        x = array(N)
+        y = array(F)
+        print "after filter x:", x
+        print "after filter y:", y        
         # swapping x and y (this is because we're reimplementing something we used to do in gnu octave, and we used 
         # those variables differently then above
         
@@ -751,7 +768,7 @@ class DaqWindow(gtk.Window):
 #        print x
 #        print "y"
 #        print y 
-        
+            
         newx = y.copy()
         y = x.copy()
         x = newx.copy()
