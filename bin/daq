@@ -1047,12 +1047,13 @@ class DaqWindow(gtk.Window):
         basedir = self.builder.get_object("directory").get_text()
         if basedir[-1] != "/":
             basedir = basedir + "/"
-        filename = basedir + user + "-" + now + "-" + str(i) + ".dat"
+
         
         rms = 0.0
         tempfig = Figure(figsize=(5,4), dpi=80)
         tempax = tempfig.add_subplot(111)
         for i in range(0, number_of_scans):
+            filename = basedir + user + "-" + now + "-" + str(i) + ".dat"
             frequency = float(self.builder.get_object("tr_frequency").get_text())
             print "duration " + str(round(frequency*duration))
 #            os.system("/home/bin/ain " + str(round(frequency*duration)) + " > /tmp/ain.dat 2> /dev/null")
