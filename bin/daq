@@ -748,7 +748,15 @@ class DaqWindow(gtk.Window):
         print self.volttomicron((10,0))
         global alignsett
         print alignsett
+        bar = self.builder.get_object("progressbar")
+        bar.set_fraction(0)
+        while gtk.events_pending():
+            gtk.main_iteration()  
+
         for i in range(0,4):
+            bar.set_fraction(float(i)/3)
+            while gtk.events_pending():
+                gtk.main_iteration()  
 #            try:
             if True:
                 index = alignsett[i+1] # NB this is NOT the same as i, it is the corresponding optical marker            
@@ -886,10 +894,19 @@ class DaqWindow(gtk.Window):
         from subprocess import call
         global alignsett
 
+        bar = self.builder.get_object("progressbar")
+        bar.show()
+        bar.set_fraction(0)
+        while gtk.events_pending():
+            gtk.main_iteration()  
+
         print alignsett
 
         imagedir = self.builder.get_object("alignimagedirectory").get_text()
         for i in range(0,4):
+            bar.set_fraction(float(i)/3)
+            while gtk.events_pending():
+                gtk.main_iteration()  
             try:
 #                index = alignsett[i+1] # NB this is NOT the same as i, it is the corresponding optical marker
                 # NB2 note that we use index to look up settings in alignsett, not i
@@ -1094,6 +1111,10 @@ class DaqWindow(gtk.Window):
             return
        
     def align_xform(self, widget):
+
+        bar = self.builder.get_object("progressbar")
+        bar.show()
+
         global alignsett
         optx = []
         opty = []
@@ -1103,14 +1124,17 @@ class DaqWindow(gtk.Window):
         opt = []
         images = []
         imagedir = self.builder.get_object("alignimagedirectory").get_text()
+        indexvec = []
         for i in range(0, 4):
             if self.builder.get_object("align_mark" + str(i+1) + "_on").get_active():
+                indexvec.append(i)
                 optx.append(float(self.builder.get_object("align_mark" + str(i+1) + "_optx").get_text()))
                 opty.append(float(self.builder.get_object("align_mark" + str(i+1) + "_opty").get_text()))
                 semx.append(float(self.builder.get_object("align_mark" + str(i+1) + "_semx").get_text()))
                 semy.append(float(self.builder.get_object("align_mark" + str(i+1) + "_semy").get_text()))
                 # load original image and put in new file
              
+        print "indexvec:", indexvec
         try: 
             sizex = float(self.builder.get_object("align_sizex").get_text())
         except:
@@ -1184,15 +1208,27 @@ class DaqWindow(gtk.Window):
         
         print rprime 
         c = polyfit(x, rprime, 1)
-        
-        error = mean(abs(x*c[0] + c[1] - rprime)) # this is a number in pixels, convert to m
+
         # we're assuming the pixels are square, in other words, the X pixel size and y pixel size set the same aspect ratio
         # as the x sensitivity and y sensitivity. We'll take the average pixelsize here, but that should not be necessary if the
         # pixels are square
-        pixelsize = mean(20*refmag/(float(xsens)*mag*sizex), 20*refmag/(float(ysens)*mag*sizey))
+        pixelsize = mean(20*refmag/(float(xsens)*mag*sizex), 20*refmag/(float(ysens)*mag*sizey))        
+        errorv = abs(x*c[0]+c[1]-rprime)*pixelsize
+        print errorv
+        error = mean(abs(x*c[0] + c[1] - rprime)) # this is a number in pixels, convert to m
+        # first we clear the error fields
+        for errorcount in range(0, 4):
+            self.builder.get_object("align_error_" + str(errorcount+1)).set_text("")
+
+        # then we set the number, note that if you disable one of the
+        # markers for Xform, you need to use indexvec to put it in the right
+        # optical image pos. So indexvec provides mapping from x elements to optical marker number
+        for errorcount in range(0,len(errorv)):
+            self.builder.get_object("align_error_" + str(indexvec[errorcount]+1)).set_text(str(errorv[errorcount]*1e6) + " um")
+
         print "pixelsize " + str(pixelsize)
         error = error*pixelsize
-        self.builder.get_object("align_error").set_text(str(error) + " m")
+        self.builder.get_object("align_error").set_text(str(error*1e6) + " um")
         
         oldc = xorg + complex(0,1)*yorg
         newc = c[0]*oldc + c[1]
@@ -1211,6 +1247,7 @@ class DaqWindow(gtk.Window):
         ax.plot(real(newc), imag(newc), 'o', alpha=0.5)
 
         aligncanvas.draw()
+        bar.hide()
         
         
     def align_burn(self, widget, data=None):
