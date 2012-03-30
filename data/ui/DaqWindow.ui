@@ -6659,7 +6659,8 @@ Frequency</property>
                                         <child>
                                           <object class="GtkButton" id="button22">
                                             <property name="label" translatable="yes">Read SEM
-marker coordinates</property>
+marker coordinates
+and images</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">True</property>

@@ -853,8 +853,8 @@ class DaqWindow(gtk.Window):
                             print "linecount: ", linecount+1
                             print "optical index:", i+1
                             print "index:", index
-                            x0 = float(lst[1])
-                            y0 = float(lst[2])
+                            x0 = float(lst[1]) # note that x0 is the RIGHT side of the image, NOT the LEFT
+                            y0 = float(lst[2]) # note that y0 is the BOTTOM side of the image, NOT the TOP
                             x1 = float(lst[3])
                             y1 = float(lst[4])
                             print "x0", x0
@@ -867,8 +867,13 @@ class DaqWindow(gtk.Window):
                         linecount = linecount + 1
 
                     fh.close()  
-                    vx = x0 + (x1-x0)/width*xm
-                    vy = y0 + (y1-y0)/height*ym
+                    
+                    print "xm ", xm
+                    print "ym ", ym
+                    vx = x1 + (x0-x1)/width*xm # note that x0 is the RIGHT side of the image, so pixel = max -> x0
+                    print "vx", vx
+                    vy = y1 + (y0-y1)/height*ym # note that y0 is the BOTTOM, so pixel = max -> y0
+                    print "vy", vy 
 
                     xpix = (0.5-vx/20)*alignsizex
                     ypix = (-0.5+vy/20)*alignsizey
@@ -1099,7 +1104,7 @@ class DaqWindow(gtk.Window):
                 self.builder.get_object("align_mark" + str(i+1) + "_semy").set_text(str(imag(x[i])))
                 # but the originall images are not, so need to pull from original spot and put in new
                 index = alignsett[i+1]
-                image = self.builder.get_object("align_mark" + str(i+1))
+                image = self.builder.get_object("align_mark" + str(index))
                 # load original image and put in new file
                 im = gd.image(imagedir + hostname + "." + str(i+1) + ".png")
                 im.writePng("/tmp/" + hostname + "." + user + "." + str(index) + ".init.png")
