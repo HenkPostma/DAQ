@@ -1000,6 +1000,8 @@ class DaqWindow(gtk.Window):
     
          
     def align_init(self, widget):
+        notebook = self.builder.get_object("notebook2")
+        notebook.set_current_page(-1) # set to last, 
         global alignsett
         alignsett = {} # resetting, because we're reloading
         optx = []
