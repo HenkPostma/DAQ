@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-01 11:31-0800\n"
+"POT-Creation-Date: 2012-03-30 08:46-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -98,667 +98,738 @@ msgid "0.2"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:14
-msgid "1"
+msgid "0.5"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:15
-msgid "10"
+msgid "1"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:16
-msgid "100"
+msgid "10"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:17
-msgid "10e-12"
+msgid "100"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:18
-msgid "1135"
+msgid "10e-12"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:19
-msgid "1210"
+msgid "1135"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:20
-msgid "1250000"
+msgid "1210"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:21
-msgid "150"
+msgid "1250000"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:22
-msgid "1e-2"
+msgid "150"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:23
-msgid "2"
+msgid "1e-2"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:24
-msgid "250000"
+msgid "2"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:25
-msgid "2nd order SEM correction"
+msgid "25"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:26
-msgid "3"
+msgid "250000"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:27
-msgid "300"
+msgid "2nd order SEM correction"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:28
-msgid "306"
+msgid "3"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:29
-msgid "385"
+msgid "300"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:30
-msgid "3e-12"
+msgid "306"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:31
-msgid "4"
+msgid "385"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:32
-msgid "42400"
+msgid "3e-12"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:33
-msgid "5"
+msgid "4"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:34
-msgid "50"
+msgid "42400"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:35
-msgid "55300"
+msgid "5"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:36
-msgid "594"
+msgid "50"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:37
-msgid "600"
+msgid "55300"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:38
-msgid "7"
+msgid "594"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:39
-msgid "828"
+msgid "600"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:40
-msgid "<b>Analysis</b>"
+msgid "7"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:41
-msgid "<b>Aux channel</b>"
+msgid "828"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:42
-msgid "<b>Coordinates</b>"
+msgid "<b>Analysis</b>"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:43
-msgid "<b>DAQ chat</b>"
+msgid "<b>Aux channel</b>"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:44
-msgid "<b>Data Location</b>"
+msgid "<b>Coordinates</b>"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:45
-msgid "<b>Exposure Settings</b>"
+msgid "<b>DAQ chat</b>"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:46
-msgid "<b>Filter</b>"
+msgid "<b>Data Location</b>"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:47
-msgid "<b>Frequency Parameters</b>"
+msgid "<b>Exposure Settings</b>"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:48
-msgid "<b>Measurement Parameters</b>"
+msgid "<b>Filter</b>"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:49
-msgid "<b>Settings</b>"
+msgid "<b>Frequency Parameters</b>"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:50
-msgid "<b>Signal</b>"
+msgid "<b>Measurement Parameters</b>"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:51
-msgid "<b>Source</b>"
+msgid "<b>Settings</b>"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:52
-msgid "<b>Sources</b>"
+msgid "<b>Signal</b>"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:53
-msgid "<b>Sweep Parameters</b>"
+msgid "<b>Source</b>"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:54
-msgid "<b>Time</b>"
+msgid "<b>Sources</b>"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:55
-msgid "<b>X axis</b>"
+msgid "<b>Sweep Parameters</b>"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:56
-msgid "<b>Y axis</b>"
+msgid "<b>Time</b>"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:57
-msgid "<b>invert Y!</b>"
+msgid "<b>X axis</b>"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:58
-msgid "A"
+msgid "<b>Y axis</b>"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:59
-msgid "Action"
+msgid "<b>invert Y!</b>"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:60
-msgid "Align"
+msgid "A"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:61
-msgid "Alignment Image Directory"
+msgid "Action"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:62
-msgid "Amplification"
+msgid "Align"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:63
-msgid "Analog in"
+msgid "Align Plot"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:64
-msgid "Analog out"
+msgid "Alignment Image Directory"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:65
-msgid "Average Points"
+msgid "Amplification"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:66
-msgid "Browse"
+msgid "Analog in"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:67
-msgid "Burn"
+msgid "Analog out"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:68
-msgid "C"
+msgid "Apply Filters"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:69
-msgid "Channel"
+msgid "Average Points"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:70
-msgid "Channel 1"
+msgid "Browse"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:71
-msgid "Channel 2"
+msgid "Burn"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:72
-msgid "Charge"
+msgid "C"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:73
-msgid "Clear"
+msgid "Channel"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:74
-msgid "Clear Plot"
+msgid "Channel 1"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:75
-msgid "Comment"
+msgid "Channel 2"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:76
-msgid "Computer Connected to Microscope"
+msgid "Charge"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:77
-msgid "Configuration"
+msgid "Clear"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:78
-msgid "Current"
+msgid "Clear Plot"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:79
-msgid "Daq"
+msgid "Comment"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:80
-msgid "Device ID"
+msgid "Computer Connected to Microscope"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:81
-msgid "Directory"
+msgid "Configuration"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:82
-msgid "Duration"
+msgid "Current"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:83
-msgid "End Frequency"
+msgid "Daq"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:84
-msgid "Frequency"
-msgstr ""
-
-#: ../data/ui/DaqWindow.ui.h:85
-msgid "Frequency Difference"
+msgid ""
+"Deviation\n"
+"from fit"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:86
-msgid "Frequency Step"
+msgid "Device ID"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:87
-msgid "Frequency step"
+msgid "Directory"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:88
-msgid "From"
+msgid "Duration"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:89
-msgid "GND offset"
+msgid "End Frequency"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:90
-msgid "Gate Voltage"
+msgid "Filter Size"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:91
-msgid "Get"
+msgid "Frequency"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:92
-msgid "Get Y"
+msgid "Frequency Difference"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:93
-msgid "Hide Last"
+msgid "Frequency Step"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:94
-msgid "High Pass Filter"
+msgid "Frequency step"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:95
-msgid "Histogram Bins"
+msgid "From"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:96
-msgid "Hole Position"
+msgid "GND offset"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:97
-msgid "Host"
+msgid "Gate Voltage"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:98
-msgid "Import Image"
+msgid "Get"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:99
-msgid "Increment"
+msgid "Get Y"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:100
-msgid "Input"
+msgid "Hide Last"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:101
-msgid "Integrated PSD"
+msgid "High Pass Filter"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:102
-msgid "Inverse Slope"
+msgid "Histogram Bins"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:103
-msgid "LO GPIB channel"
+msgid "Hole Position"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:104
-msgid "Legend"
+msgid "Host"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:105
-msgid "Linear Scan"
+msgid "Import Image"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:106
-msgid "Live View"
+msgid "Increment"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:107
-msgid "Low Pass Filter"
+msgid "Input"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:108
-msgid "MHz"
+msgid "Integrated PSD"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:109
-msgid "Magnification"
+msgid "Inverse Slope"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:110
-msgid "Marker 1"
+msgid "LO GPIB channel"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:111
-msgid "Marker 2"
+msgid "Legend"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:112
-msgid "Marker 3"
+msgid "Linear Scan"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:113
-msgid "Marker 4"
+msgid "Live View"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:114
-msgid "Marker Position File"
+msgid "Low Pass Filter"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:115
-msgid "Max"
+msgid "MHz"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:116
-msgid "Maximum PSD"
+msgid "Magnification"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:117
-msgid "Mean Error"
+msgid "Marker 1"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:118
-msgid "Microscope"
+msgid "Marker 2"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:119
-msgid "Min"
+msgid "Marker 3"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:120
-msgid "Number of channels"
+msgid "Marker 4"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:121
-msgid "Number of scans"
+msgid "Marker Position File"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:122
-msgid "Offset"
+msgid "MarkerSearch"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:123
-msgid "Opt X"
+msgid "Max"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:124
-msgid "Opt Y"
+msgid "Maximum PSD"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:125
-msgid "Parameters"
+msgid "Mean Error"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:126
-msgid "Points"
+msgid "Microscope"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:127
+msgid "Min"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:128
+msgid "Number of X pixels"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:129
+msgid "Number of Y pixels"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:130
+msgid "Number of channels"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:131
+msgid "Number of scans"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:132
+msgid "Offset"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:133
+msgid "Opt X"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:134
+msgid "Opt Y"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:135
+msgid "Optical Image"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:136
+msgid "Parameters"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:137
+msgid "Planefit"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:138
+msgid "Points"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:139
 msgid ""
 "Points per \n"
 "Frequency"
 msgstr ""
 
-#: ../data/ui/DaqWindow.ui.h:129
-msgid "Post"
-msgstr ""
-
-#: ../data/ui/DaqWindow.ui.h:130
-msgid "Processing"
-msgstr ""
-
-#: ../data/ui/DaqWindow.ui.h:131
-msgid "Processing done: "
-msgstr ""
-
-#: ../data/ui/DaqWindow.ui.h:132
-msgid "Pulse Computer"
-msgstr ""
-
-#: ../data/ui/DaqWindow.ui.h:133
-msgid "RF GPIB channel"
-msgstr ""
-
-#: ../data/ui/DaqWindow.ui.h:134
-msgid "RF Reflection"
-msgstr ""
-
-#: ../data/ui/DaqWindow.ui.h:135
-msgid "RF Reflection 2"
-msgstr ""
-
-#: ../data/ui/DaqWindow.ui.h:136
-msgid "RMS"
-msgstr ""
-
-#: ../data/ui/DaqWindow.ui.h:137
-msgid ""
-"Read SEM\n"
-"marker coordinates"
-msgstr ""
-
-#: ../data/ui/DaqWindow.ui.h:139
-msgid "Redo"
-msgstr ""
-
-#: ../data/ui/DaqWindow.ui.h:140
-msgid "SEM X sensitivity"
-msgstr ""
-
 #: ../data/ui/DaqWindow.ui.h:141
-msgid "SEM Y sensitivity"
+msgid "Points per pixel"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:142
-msgid "Sample frequency"
+msgid "Post"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:143
-msgid "Save"
+msgid "Processing"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:144
-msgid "SaveComment"
+msgid "Processing done: "
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:145
-msgid "Scale"
+msgid "Pulse Computer"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:146
-msgid "Sem X"
+msgid "RF GPIB channel"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:147
-msgid "Sem Y"
+msgid "RF Reflection"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:148
-msgid "Sensitivity reference magnification"
+msgid "RF Reflection 2"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:149
-msgid "Set Aux = "
+msgid "RMS"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:150
-msgid "Set X = "
-msgstr ""
-
-#: ../data/ui/DaqWindow.ui.h:151
-msgid "Slope"
-msgstr ""
-
-#: ../data/ui/DaqWindow.ui.h:152
-msgid "Start"
+msgid ""
+"Read SEM\n"
+"marker coordinates\n"
+"and images"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:153
-msgid "Start Frequency"
+msgid "Redo"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:154
-msgid "Status:"
+msgid "SEM Image"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:155
-msgid "Sweep rate (V/s)"
+msgid "SEM X sensitivity"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:156
-msgid "Sync Data to Desktop"
+msgid "SEM Y sensitivity"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:157
-msgid "Time"
+msgid "Sample frequency"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:158
-msgid "Time Trace"
+msgid "Save"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:159
-msgid "Time Trace 2"
+msgid "SaveComment"
 msgstr ""
 
 #: ../data/ui/DaqWindow.ui.h:160
+msgid "Scale"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:161
+msgid "Sem X"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:162
+msgid "Sem Y"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:163
+msgid "Sensitivity reference magnification"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:164
+msgid "Set Aux = "
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:165
+msgid "Set X = "
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:166
+msgid "Slope"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:167
+msgid "Start"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:168
+msgid "Start Frequency"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:169
+msgid "Status:"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:170
+msgid "Sweep rate (V/s)"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:171
+msgid "Sync Data to Desktop"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:172
+msgid "Take Image"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:173
+msgid "Threshold"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:174
+msgid "Time"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:175
+msgid "Time Trace"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:176
+msgid "Time Trace 2"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:177
 msgid ""
 "Time delay \n"
 "bef. measu"
 msgstr ""
 
-#: ../data/ui/DaqWindow.ui.h:162
+#: ../data/ui/DaqWindow.ui.h:179
 msgid "Time delay bef. measu"
 msgstr ""
 
-#: ../data/ui/DaqWindow.ui.h:163
+#: ../data/ui/DaqWindow.ui.h:180
 msgid "Time duration"
 msgstr ""
 
-#: ../data/ui/DaqWindow.ui.h:164
+#: ../data/ui/DaqWindow.ui.h:181
 msgid "Timebase"
 msgstr ""
 
-#: ../data/ui/DaqWindow.ui.h:165
+#: ../data/ui/DaqWindow.ui.h:182
 msgid "To "
 msgstr ""
 
-#: ../data/ui/DaqWindow.ui.h:166
+#: ../data/ui/DaqWindow.ui.h:183
 msgid "Translocation"
 msgstr ""
 
-#: ../data/ui/DaqWindow.ui.h:167
+#: ../data/ui/DaqWindow.ui.h:184
 msgid "Unit"
 msgstr ""
 
-#: ../data/ui/DaqWindow.ui.h:168
+#: ../data/ui/DaqWindow.ui.h:185
 msgid "Use"
 msgstr ""
 
-#: ../data/ui/DaqWindow.ui.h:169
+#: ../data/ui/DaqWindow.ui.h:186
 msgid "User"
 msgstr ""
 
-#: ../data/ui/DaqWindow.ui.h:170
+#: ../data/ui/DaqWindow.ui.h:187
 msgid "V"
 msgstr ""
 
-#: ../data/ui/DaqWindow.ui.h:171
+#: ../data/ui/DaqWindow.ui.h:188
 msgid "V/m"
 msgstr ""
 
-#: ../data/ui/DaqWindow.ui.h:172
+#: ../data/ui/DaqWindow.ui.h:189
 msgid "Value"
 msgstr ""
 
-#: ../data/ui/DaqWindow.ui.h:173
+#: ../data/ui/DaqWindow.ui.h:190
 msgid "Wait (s)"
 msgstr ""
 
-#: ../data/ui/DaqWindow.ui.h:174
+#: ../data/ui/DaqWindow.ui.h:191
 msgid "X"
 msgstr ""
 
-#: ../data/ui/DaqWindow.ui.h:175
+#: ../data/ui/DaqWindow.ui.h:192
+msgid "Xform"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:193
 msgid "cycle"
 msgstr ""
 
-#: ../data/ui/DaqWindow.ui.h:176
+#: ../data/ui/DaqWindow.ui.h:194
 msgid "invert image"
 msgstr ""
 
-#: ../data/ui/DaqWindow.ui.h:177
+#: ../data/ui/DaqWindow.ui.h:195
 msgid "invert video"
 msgstr ""
 
-#: ../data/ui/DaqWindow.ui.h:178
+#: ../data/ui/DaqWindow.ui.h:196
 msgid "localhost"
 msgstr ""
 
-#: ../data/ui/DaqWindow.ui.h:179
+#: ../data/ui/DaqWindow.ui.h:197
 msgid "s"
 msgstr ""
 
-#: ../data/ui/DaqWindow.ui.h:180
+#: ../data/ui/DaqWindow.ui.h:198
 msgid "smalley"
 msgstr ""
 
-#: ../data/ui/DaqWindow.ui.h:181
+#: ../data/ui/DaqWindow.ui.h:199
+msgid "um"
+msgstr ""
+
+#: ../data/ui/DaqWindow.ui.h:200
 msgid "winfree"
 msgstr ""

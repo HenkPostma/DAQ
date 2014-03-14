@@ -93,7 +93,7 @@ class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
 
 DistUtilsExtra.auto.setup(
     name='daq',
-    version='12.02.2',
+    version='12.03',
     license='GPL-3',
     author='HenkPostma',
     author_email='henkpm@gmail.com',

@@ -20,8 +20,10 @@ Depends: ${misc:Depends},
  python-numpy,
  libcomedi0,
  python-desktopcouch-records,
+ python-xmpp,
  python-apport,
  python-gobject,
+ python-gd,
  python-gtk2
 Description: UNKNOWN
  UNKNOWN

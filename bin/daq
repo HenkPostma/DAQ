@@ -2896,6 +2896,8 @@ def NewDaqWindow():
 if __name__ == "__main__":
     #support for command line options
     import logging, optparse
+
+    print "hi there"
     parser = optparse.OptionParser(version="%prog %ver")
     parser.add_option("-v", "--verbose", action="store_true", dest="verbose", help="Show debug messages")
     (options, args) = parser.parse_args()
