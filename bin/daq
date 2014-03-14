@@ -17,6 +17,7 @@
 
 import sys
 import os
+import stat
 import gtk
 import time 
 import commands
@@ -25,6 +26,8 @@ import datetime
 import fcntl 
 
 import gobject 
+
+device = "/dev/comedi0"
 
 from PythonMagick import Image
 from numpy import *
@@ -52,6 +55,8 @@ try:
 except:
     print "Cannot load comedi module, please install python-libcomedi"
 
+
+
 from matplotlib.figure import Figure
 from numpy import arange, sin, pi
 from time import localtime, strftime
@@ -64,11 +69,17 @@ imgext2 = "png"
 
 gpibwrite = "/home/bin/gpib-write"
 
-device = "/dev/comedi0"
-
 def SetComediDevice():
+    global device 
+
+    s = os.stat(device)
+    if not(bool(s.st_mode & stat.S_IXOTH) and bool(s.st_mode & stat.S_IWOTH) and bool(s.st_mode & stat.S_IROTH)):
+        print "Please fix permissions on " + device + "*"
+        return ""
+    else:
+        print "permissions on " + device + " ok (hopefully)"
+
     if os.path.isfile("/proc/comedi"):
-        device = "/dev/comedi0"
         try:
             dev = comedi.comedi_open(device)
             global insubdevice
@@ -78,13 +89,17 @@ def SetComediDevice():
             outsubdevice = comedi.comedi_get_write_subdevice(dev)
         #    print "subdevice for output = " + str(outsubdevice)
             comedi.comedi_close(dev)
-            return "/dev/comedi0"
+            print "closed", device
+            return device 
         except:
             print "cannot open /dev/comedi0, permissions?"
     else:
         return ""
 
-SetComediDevice()
+try:
+    SetComediDevice()
+except:
+    print "Cannot open Comedi device"
 
 print "DAQ device is " + device 
 print "subdevice for input = " + str(insubdevice)
