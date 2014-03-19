@@ -92,7 +92,7 @@ def SetComediDevice():
             print "closed", device
             return device 
         except:
-            print "cannot open /dev/comedi0, permissions?"
+            print "cannot open " + device + ", permissions?"
     else:
         return ""
 
@@ -153,22 +153,23 @@ from daq import AboutDaqDialog, PreferencesDaqDialog
 from daq.daqconfig import getdatapath
 
 def diowrite(subdevice, channel, data):
-	dev = comedi.comedi_open("/dev/comedi0")
-	ret1 = comedi.comedi_dio_config(dev, subdevice, channel, comedi.COMEDI_OUTPUT)
+    global device 
+    dev = comedi.comedi_open(device)
+    ret1 = comedi.comedi_dio_config(dev, subdevice, channel, comedi.COMEDI_OUTPUT)
 
-	if ret1 == 1:
-		pass
-	else:
-		print "initialisation failed"
-		
-	ret=comedi.comedi_dio_write(dev, subdevice, channel, data)
+    if ret1 == 1:
+        pass
+    else:
+        print "initialisation failed"
+        
+    ret=comedi.comedi_dio_write(dev, subdevice, channel, data)
 
-	if ret == 1:
-		pass
-	else:
-		print "setting failed"
-	comedi.comedi_close(dev)
-	
+    if ret == 1:
+        pass
+    else:
+        print "setting failed"
+    comedi.comedi_close(dev)
+    
 def writeline(delayperpoint,vx,vy,dvx,dvy,N):
     beamblank()
     for i in range(0, N+1):
@@ -180,7 +181,8 @@ def writeline(delayperpoint,vx,vy,dvx,dvy,N):
     beamblank()
 
 def timedbeamunblank(delay):
-    dev = comedi.comedi_open("/dev/comedi0")
+    global device 
+    dev = comedi.comedi_open(device)
 
     subdevice = 2
     channel = 0
@@ -217,52 +219,54 @@ def timedbeamunblank(delay):
 
     comedi.comedi_close(dev)
     
-	
+    
 def acquirecontrol():
-	diowrite(2, 1, 1)
+    diowrite(2, 1, 1)
 
 def releasecontrol():
-	diowrite(2, 1, 0)
+    diowrite(2, 1, 0)
 
 def beamblank():
-	diowrite(2, 0, 1)
-	
+    diowrite(2, 0, 1)
+    
 def beamunblank():
-	diowrite(2, 0, 0)
-	
+    diowrite(2, 0, 0)
+    
 def getimage(nx, ny, n):
-	dev = comedi.comedi_open("/dev/comedi0")
-	outsubdevice = 1
-	insubdevice = 0
-	xchannel = 0
-	ychannel = 1
-	inchannel = 0
-	analogref = comedi.AREF_GROUND
-	arange =  0
-	
-	image = numpy.zeros((nx,ny), float)
-	
-	for y in range(0, ny):
-		write_data = int(  (float(y)/(ny-1) ) * 65535)	
-		msg = comedi.comedi_data_write(dev, outsubdevice, ychannel, arange, analogref, write_data)
-		for x in range(0, nx):
-			write_data = int(  (float(x)/(nx-1) ) * 65535)
-			msg = comedi.comedi_data_write(dev, outsubdevice, xchannel, arange, analogref, write_data)
-			pixel = 0.0
-			for i in range(0, n):
-				result = comedi.comedi_data_read(dev,insubdevice,inchannel,arange,analogref)
-				pixel = pixel + float(result[1])
-			pixel = pixel/n
-#			print pixel,
-			msg=result[0]
-			image[x][y] = pixel
-#		print
-		
-	comedi.comedi_close(dev)
-	return pixel
+    global device 
+    dev = comedi.comedi_open(device)
+    outsubdevice = 1
+    insubdevice = 0
+    xchannel = 0
+    ychannel = 1
+    inchannel = 0
+    analogref = comedi.AREF_GROUND
+    arange =  0
+    
+    image = numpy.zeros((nx,ny), float)
+    
+    for y in range(0, ny):
+        write_data = int(  (float(y)/(ny-1) ) * 65535)    
+        msg = comedi.comedi_data_write(dev, outsubdevice, ychannel, arange, analogref, write_data)
+        for x in range(0, nx):
+            write_data = int(  (float(x)/(nx-1) ) * 65535)
+            msg = comedi.comedi_data_write(dev, outsubdevice, xchannel, arange, analogref, write_data)
+            pixel = 0.0
+            for i in range(0, n):
+                result = comedi.comedi_data_read(dev,insubdevice,inchannel,arange,analogref)
+                pixel = pixel + float(result[1])
+            pixel = pixel/n
+#            print pixel,
+            msg=result[0]
+            image[x][y] = pixel
+#        print
+        
+    comedi.comedi_close(dev)
+    return pixel
 
 def sety(voltage):
-    dev = comedi.comedi_open("/dev/comedi0")
+    global device 
+    dev = comedi.comedi_open(device)
     outsubdevice = 1
     insubdevice = 0
     xchannel = 0
@@ -273,9 +277,10 @@ def sety(voltage):
     write_data = int(  (float(voltage)+10)/20*65535)
     msg = comedi.comedi_data_write(dev, outsubdevice, ychannel, arange, analogref, write_data)
     comedi.comedi_close(dev)
-	
+    
 def setx(voltage):
-    dev = comedi.comedi_open("/dev/comedi0")
+    global device
+    dev = comedi.comedi_open(device)
     outsubdevice = 1
     insubdevice = 0
     xchannel = 0
@@ -286,9 +291,10 @@ def setx(voltage):
     write_data = int(  (float(voltage)+10)/20*65535)
     msg = comedi.comedi_data_write(dev, outsubdevice, xchannel, arange, analogref, write_data)
     comedi.comedi_close(dev)
-			
+            
 def imagecapture_part(xb, yb, xe, ye, nx, ny, n):
-    dev = comedi.comedi_open("/dev/comedi0")
+    global device 
+    dev = comedi.comedi_open(device)
     outsubdevice = 1
     insubdevice = 0
     xchannel = 0
@@ -298,7 +304,7 @@ def imagecapture_part(xb, yb, xe, ye, nx, ny, n):
     arange =  0
 
     image = numpy.zeros((nx,ny), float)
-	
+    
     for y in range(ny, 0, -1):
         y = y-1
         write_data = int(  (float(y)/(ny-1) *(ye-yb) + yb ) * 65535)
@@ -316,7 +322,7 @@ def imagecapture_part(xb, yb, xe, ye, nx, ny, n):
             msg=result[0]
             image[x][y] = pixel
         print
-		
+        
     comedi.comedi_close(dev)
     return image
 
@@ -2331,6 +2337,7 @@ class DaqWindow(gtk.Window):
 
 
     def set_voltage(self, widget, data=None):
+        global device
         deviceid = self.builder.get_object("deviceid").get_text()
         if deviceid == "":
             self.builder.get_object("statusbar1").push(0, "Error: Set Device ID first")
@@ -2361,7 +2368,7 @@ class DaqWindow(gtk.Window):
             return
 
         print "set to " + str(x)
-        dev = comedi.comedi_open("/dev/comedi0")
+        dev = comedi.comedi_open(device)
         subdevice = 1
         channel = int(self.builder.get_object("channelout").get_text())
         analogref = comedi.AREF_GROUND
